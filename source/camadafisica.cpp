@@ -1,15 +1,15 @@
 /*************************************************************
 * Camada Transmissora
 *********************************************************** */
-int[] CamadaFisicaTransmissoraCodificacaoBinaria (int quadro []) {
+int* CamadaFisicaTransmissoraCodificacaoBinaria (int *quadro) {
 	//implementacao do algoritmo
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
-int[] CamadaFisicaTransmissoraCodificacaoManchester (int quadro []) {
+int* CamadaFisicaTransmissoraCodificacaoManchester (int *quadro) {
 	//implementacao do algoritmo
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoManchester
 
-int[] CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(int quadro []){
+int* CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(int *quadro){
 	//implementacao do algoritmo
 }//fim do CamadaFisicaTransmissoraCodificacaoManchesterDiferencial
 
@@ -18,15 +18,15 @@ int[] CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(int quadro []){
 * Camada Receptora
 *********************************************************** */
 
-int[] CamadaFisicaReceptoraCodificacaoBinaria (int quadro []) {
+int* CamadaFisicaReceptoraCodificacaoBinaria (int *quadro) {
 	//implementacao do algoritmo para DECODIFICAR
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoBinaria
 
-int[] CamadaFisicaReceptoraCodificacaoManchester (int quadro []) {
+int* CamadaFisicaReceptoraCodificacaoManchester (int *quadro) {
 	//implementacao do algoritmo para DECODIFICAR
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoManchester
 
-int[] CamadaFisicaReceptoraCodificacaoManchesterDiferencial(int quadro[]){
+int* CamadaFisicaReceptoraCodificacaoManchesterDiferencial(int *quadro){
 	//implementacao do algoritmo para DECODIFICAR
 }//fim do CamadaFisicaReceptoraDecodificacaoManchesterDiferencial
 
