@@ -1,14 +1,14 @@
 #ifndef CAMADAFISICA_H
 #define CAMADAFISICA_H
 
-#include <iostream>
+#include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include <iostream>
 #include <string>
 #include <cstring>
-#include <stdlib.h>
 #include <bitset>
 #include <vector>
-#include <math.h>
 
 using namespace std;
 
