@@ -17,26 +17,31 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (bitset<8> quadro) {
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
-	vector<int> codigoManchester; 
+	vector <int> codigoManchester; 
 	string codigoManchesterStr;
 
 	cout << "Char em Binario: " << quadro << endl;
 
 	for(int i = 7; i >= 0; i--){
 		if(quadro[i] == 0){
-			codigoManchester.push_back(01);
+			codigoManchester.push_back(0);
+			codigoManchester.push_back(1);
 			codigoManchesterStr += "01";
 		}
 		else if(quadro[i] == 1){
-			codigoManchester.push_back(10);
+			codigoManchester.push_back(1);
+			codigoManchester.push_back(0);
 			codigoManchesterStr += "10";
 		}
 	}
 
 	cout << "Char em Codigo Manchester String: " << codigoManchesterStr << endl;
-
 	cout << "Char em Codigo Manchester Vetor Int: ";
-	for(int i = 0; i < codigoManchester.size(); i++) {
+
+	// tamanho do binario em codificacao manchester
+	int size = codigoManchester.size();
+
+	for(int i = 0; i < size; i++) {
 		cout << codigoManchester[i];
 	}
 	cout << endl;
@@ -55,30 +60,33 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 
 // Decodificação BINARIA
 vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (vector<int> quadro) {
-
 	return quadro;
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoBinaria
 
 // Decodificação MANCHESTER
 vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 	
-	vector<int> cod; 
+	vector<int> manchesterDecodificado; 
+	string parBits;	// armazena pares de bits do quadro codificado em manchester
 
-	for(int i = 0; i < 8; i++){
-		if(quadro[i] == 01){
-			cod.push_back(0);
+	for(int i = 0; i < 16; i++) {
+		// forma o par de bits
+		parBits += to_string(quadro[i]);
+		parBits += to_string(quadro[i + 1]);
+
+		// decodificando para codificacao binaria usual 
+		if(parBits == "01"){
+			manchesterDecodificado.push_back(0);
 		}
-		else if(quadro[i] == 10){
-			cod.push_back(1);
+		else if(parBits == "10"){
+			manchesterDecodificado.push_back(1);
 		}
-		//cout << "cod: " << cod[i] << endl;
+		i++; // i tem que incrementar de novo para ir de par em par
+		// reseta string de par de bits
+		parBits = "";
 	}
 
-	/*for (vector<int>::iterator it = cod.begin(); it != cod.end(); ++it)
-		cout << ' ' << *it;
-		cout << '\n';	*/
-
-	return cod;
+	return manchesterDecodificado;
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoManchester
 
 // Decodificação MANCHESTER DIFERENCIAL

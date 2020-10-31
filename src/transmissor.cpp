@@ -3,9 +3,10 @@
 int tam; // Armazena tamanho da entrada 
 
 void AplicacaoTransmissora () {
-	//string mensagem;
 	string mensagem;
 	cout << "Digite uma mensagem: ";
+
+	// Armazena mensagem de entrada a ser enviada
 	getline(cin, mensagem );
 	
 	CamadaDeAplicacaoTransmissora(mensagem); 
@@ -17,10 +18,11 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 	string s;
   tam = mensagem.length();
 
+	// loop em cada byte da mensagem de entrada
 	for (int i = 0; i < tam; ++i){
     cout << "------------------------" << endl;
 
-    //trabalhar com bits!!!
+    // transforma char em inteiro 
     int temp = ((int)(mensagem[i]));
     bitArr = temp;
 

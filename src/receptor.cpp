@@ -1,6 +1,5 @@
 #include "camadafisica.h"
 
-
 int tamReceptor; // tamanho da mensagem de entrada
 int cont = 0;
 string msg = ""; // armazena resultado da decodificacao
@@ -41,11 +40,11 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
 	for (int i = 0; i < 8; ++i){
 		mensagem += to_string(quadro[i]);
 	}
-	cout << "Char em Binario Decodificado:  "<< mensagem << endl;
+	cout << "Char em Binario Decodificado: "<< mensagem << endl;
 
   // pega valor da tabela ASCII do string em binario
 	temp = stoi(mensagem, 0, 2);
-	cout << "temp:  "<< temp << endl;
+	cout << "temp: "<< temp << endl;
 
   // casting do valor ASCII para char
 	letra = (char)temp;
@@ -57,10 +56,8 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
 }//fim do metodo CamadaDeAplicacaoReceptora
 
 void AplicacaoReceptora (string mensagem) {
-  
   cont++;
   if(cont == tamReceptor) {
     cout << "\n\nA mensagem recebida foi: " << mensagem << endl;
   }
-
 }//fim do metodo AplicacaoReceptora 
