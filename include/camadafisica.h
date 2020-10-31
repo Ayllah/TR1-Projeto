@@ -1,31 +1,41 @@
 #ifndef CAMADAFISICA_H
 #define CAMADAFISICA_H
 
-
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <bitset> 
 
-#include <stdio.h>
-#include <sstream>
 #include <stdlib.h>
-#include <bits/stdc++.h> 
+#include <stdio.h>
 
+using namespace std;
+
+void MeioDeComunicacao (vector<int> fluxoBrutoDeBits);
 
 /*************************************************************
 * Camada Transmissora
 *********************************************************** */
 
-std::vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (std::bitset<8> quadro);
-std::vector<int> CamadaFisicaTransmissoraCodificacaoManchester (std::bitset<8> quadro);
-std::vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(std::bitset<8> quadro);
+void AplicacaoTransmissora ();
+void CamadaFisicaTransmissora (bitset<8> quadro);
+void CamadaDeAplicacaoTransmissora (string mensagem);
+
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (bitset<8> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> quadro);
 
 /*************************************************************
 * Camada Receptora
 *********************************************************** */
 
-std::vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (std::vector<int> quadro);
-std::vector<int> CamadaFisicaReceptoraDecodificacaoManchester (std::vector<int> quadro);
-std::vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(std::vector<int> quadro);
+void AplicacaoReceptora (string mensagem);
+void CamadaFisicaReceptora (vector<int> quadro);
+void CamadaDeAplicacaoReceptora (vector<int> quadro);
+
+vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (vector<int> quadro);
+vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro);
+vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> quadro);
 
 #endif 	//CAMADAFISICA_H
