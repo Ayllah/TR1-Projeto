@@ -5,40 +5,56 @@
 * Luís Vinicius Capelletto 160134544
 *********************************************************** */
 #include "camadafisica.h"
-#include <iostream>
-#include <string>
+
 
 using namespace std;
 
-void AplicacaoReceptora (string mensagem);
-void CamadaDeAplicacaoReceptora (int *quadro);
-void CamadaFisicaReceptora (int *quadro);
-void MeioDeComunicacao (int *fluxoBrutoDeBits);
-void CamadaFisicaTransmissora (int *quadro);
-void CamadaDeAplicacaoTransmissora (string mensagem);
+
+void AplicacaoReceptora (std::string mensagem);
+void CamadaDeAplicacaoReceptora (std::vector<int> quadro);
+void CamadaFisicaReceptora (std::vector<int> quadro);
+void MeioDeComunicacao (std::vector<int> fluxoBrutoDeBits);
+void CamadaFisicaTransmissora (std::bitset<8> quadro);
+void CamadaDeAplicacaoTransmissora (std::string mensagem);
 void AplicacaoTransmissora ();
 
-void main () {
+int main () {
 	AplicacaoTransmissora();
 }//fim do metodo main
 
 void AplicacaoTransmissora () {
-	string mensagem;
+	//string mensagem;
+	std::string mensagem;
 	cout << "Digite uma mensagem:" << endl;
-	cin >> mensagem;
+	getline(std::cin, mensagem );
 	//chama a proxima camada
 	CamadaDeAplicacaoTransmissora(mensagem); //em um exemplo mais realistico, aqui seria dado um SEND do SOCKET
 }//fim do metodo AplicacaoTransmissora
 
-void CamadaDeAplicacaoTransmissora (string mensagem) {
-	int *quadro = mensagem; //trabalhar com bits!!!
-	//chama a proxima camada
-	CamadaFisicaTransmissora(quadro);
+void CamadaDeAplicacaoTransmissora (std::string mensagem) {
+	std::bitset<8> bitArr;
+	int quadro[8];
+	std::string s;
+
+	for (int i = 0; i < mensagem.length(); ++i){
+    	int temp = ((int)(mensagem[i]));
+    	bitArr = temp;
+    	//std::cout << "bitArr: " << bitArr << std::endl;
+		//s = std::bitset<8>(temp).to_string();
+		//std::cout << "s: " << s << std::endl;
+
+    	//trabalhar com bits!!!
+		//chama a proxima camada
+		CamadaFisicaTransmissora(bitArr);
+	}
+
+	
+
 }//fim do metodo CamadaDeAplicacaoTransmissora
 
-void CamadaFisicaTransmissora (int *quadro) {
-	int tipoDeCodificacao = 0; //alterar de acordo o teste
-	int *fluxoBrutoDeBits; //ATENÇÃO: trabalhar com BITS!!!
+void CamadaFisicaTransmissora (std::bitset<8> quadro) {
+	int tipoDeCodificacao = 1; //alterar de acordo o teste
+	std::vector<int> fluxoBrutoDeBits; //ATENÇÃO: trabalhar com BITS!!!
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
 			fluxoBrutoDeBits =
@@ -55,27 +71,29 @@ void CamadaFisicaTransmissora (int *quadro) {
 	}//fim do switch/case
 
 	MeioDeComunicacao(fluxoBrutoDeBits);
-}//fim do metodo CamadaFisicaTransmissora
+}//fim do metodo CamadaFisicaTransmissora */
 
 /* Este metodo simula a transmissao da informacao no meio de
 * comunicacao, passando de um pontoA (transmissor) para um
 * ponto B (receptor)
 */
-void MeioDeComunicacao (int *fluxoBrutoDeBits) {
+void MeioDeComunicacao (std::vector<int> fluxoBrutoDeBits) {
 	//OBS IMPORTANTE: trabalhar com BITS e nao com BYTES!!!
-	int *fluxoBrutoDeBitsPontoA, *fluxoBrutoDeBitsPontoB;
+	std::vector<int> fluxoBrutoDeBitsPontoA;
+	std::vector<int> fluxoBrutoDeBitsPontoB;
 	fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
-	while (fluxoBrutoDeBitsPontoB.lenght!= fluxoBrutoDeBitsPontoA) {
-		fluxoBrutoBitsPontoB += fluxoBrutoBitsPontoA; //BITS! Sendo transferidos
+
+	while (fluxoBrutoDeBitsPontoB.size()!= fluxoBrutoDeBitsPontoA.size()) {
+		fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA; //BITS! Sendo transferidos
 	}//fim do while
 
 	//chama proxima camada
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }//fim do metodo MeioDeTransmissao
 
-void CamadaFisicaReceptora (int *quadro) {
-	int tipoDeDecodificacao = 0; //alterar de acordo o teste
-	int *fluxoBrutoDeBits; //ATENÇÃO: trabalhar com BITS!!!
+void CamadaFisicaReceptora (std::vector<int> quadro) {
+	int tipoDeDecodificacao = 1; //alterar de acordo o teste
+	std::vector<int> fluxoBrutoDeBits; //ATENÇÃO: trabalhar com BITS!!!
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
 			fluxoBrutoDeBits =
@@ -96,12 +114,43 @@ void CamadaFisicaReceptora (int *quadro) {
 }//fim do metodo CamadaFisicaTransmissora
 
 
-void CamadaDeAplicacaoReceptora (int *quadro) {
-	string mensagem = *quadro; //estava trabalhando com bits
+void CamadaDeAplicacaoReceptora (std::vector<int> quadro) {
+	std::string mensagem; //estava trabalhando com bits
+	int temp;
+	char letra;
+	std::string mensagem2;
+	std::string mensagem3;
+	std::vector<char> teste;
+
+	/*for (int i = 0; i < 8; ++i){
+		mensagem += to_string(quadro[i]);
+	}
+	cout << "A mensagem recebida foi:" << mensagem << endl;
+
+	int temp = stoi(mensagem);
+	char letra = (char)temp;
+	cout << "A mensagem recebida foi:" << letra << endl;*/
+
+	for (int i = 0; i < 8; ++i){
+		mensagem += to_string(quadro[i]);
+	}
+	//std::cout << "mensagem:  "<< mensagem << std::endl;
+	temp = stoi(mensagem,0,2);
+	//std::cout << "temp:  "<< temp << std::endl;
+	//std::cout << "letra:  "<< (char)temp << std::endl;
+
+	letra = (char)temp;
+	std::cout << "letra:  "<< letra << std::endl;
+
+	mensagem2 += letra;
+	//std::cout << "mensagem:  "<< mensagem2 << std::endl;
+
+	mensagem3 += mensagem2;
+	//std::cout << "mensagem:  "<< mensagem3 << std::endl;
 	//chama proxima camada
-	AplicacaoReceptora(mensagem);
+	AplicacaoReceptora(mensagem3);
 }//fim do metodo CamadaDeAplicacaoReceptora
 
-void AplicacaoReceptora (string mensagem) {
+void AplicacaoReceptora (std::string mensagem) {
 	cout << "A mensagem recebida foi:" << mensagem << endl;
-}//fim do metodo AplicacaoReceptora
+}//fim do metodo AplicacaoReceptora 
