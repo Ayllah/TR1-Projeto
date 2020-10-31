@@ -26,17 +26,14 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 		if(quadro[i] == 0){
 			codigoManchester.push_back(0);
 			codigoManchester.push_back(1);
-			codigoManchesterStr += "01";
 		}
 		else if(quadro[i] == 1){
 			codigoManchester.push_back(1);
 			codigoManchester.push_back(0);
-			codigoManchesterStr += "10";
 		}
 	}
 
-	cout << "Char em Codigo Manchester String: " << codigoManchesterStr << endl;
-	cout << "Char em Codigo Manchester Vetor Int: ";
+	cout << "Char em Codigo Manchester em Vetor de inteiros: ";
 
 	// tamanho do binario em codificacao manchester
 	int size = codigoManchester.size();
