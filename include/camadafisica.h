@@ -16,7 +16,7 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits);
 
 /*************************************************************
 * Camada Transmissora
-*********************************************************** */
+*************************************************************/
 
 void AplicacaoTransmissora ();
 void CamadaFisicaTransmissora (bitset<8> quadro);
@@ -28,10 +28,10 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 
 /*************************************************************
 * Camada Receptora
-*********************************************************** */
+*************************************************************/
 
 void AplicacaoReceptora (string mensagem);
-void CamadaFisicaReceptora (vector<int> quadro);
+void CamadaFisicaReceptora (vector<int> quadro, int tam);
 void CamadaDeAplicacaoReceptora (vector<int> quadro);
 
 vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (vector<int> quadro);

@@ -1,37 +1,45 @@
 #include "camadafisica.h"
 
+int tam; // Armazena tamanho da entrada 
+
 void AplicacaoTransmissora () {
 	//string mensagem;
-	std::string mensagem;
-	cout << "Digite uma mensagem:" << endl;
-	getline(std::cin, mensagem );
-	//chama a proxima camada
-	CamadaDeAplicacaoTransmissora(mensagem); //em um exemplo mais realistico, aqui seria dado um SEND do SOCKET
+	string mensagem;
+	cout << "Digite uma mensagem: ";
+	getline(cin, mensagem );
+	
+	CamadaDeAplicacaoTransmissora(mensagem); 
 }//fim do metodo AplicacaoTransmissora
 
-void CamadaDeAplicacaoTransmissora (std::string mensagem) {
-	std::bitset<8> bitArr;
-	int quadro[8];
-	std::string s;
+void CamadaDeAplicacaoTransmissora (string mensagem) {
+	bitset<8> bitArr;
+	// int quadro[8];
+	string s;
+  tam = mensagem.length();
 
-	for (int i = 0; i < mensagem.length(); ++i){
-    	int temp = ((int)(mensagem[i]));
-    	bitArr = temp;
-    	//std::cout << "bitArr: " << bitArr << std::endl;
-		//s = std::bitset<8>(temp).to_string();
-		//std::cout << "s: " << s << std::endl;
+	for (int i = 0; i < tam; ++i){
+    cout << "------------------------" << endl;
 
-    	//trabalhar com bits!!!
+    //trabalhar com bits!!!
+    int temp = ((int)(mensagem[i]));
+    bitArr = temp;
+
+    // cout << "bitArr: " << bitArr << endl;
+		// s = bitset<8>(temp).to_string();
+		// cout << "s: " << s << endl;
+
 		//chama a proxima camada
 		CamadaFisicaTransmissora(bitArr);
 	}
 
-
 }//fim do metodo CamadaDeAplicacaoTransmissora
 
-void CamadaFisicaTransmissora (std::bitset<8> quadro) {
-	int tipoDeCodificacao = 1; //alterar de acordo o teste
-	std::vector<int> fluxoBrutoDeBits; //ATENÇÃO: trabalhar com BITS!!!
+void CamadaFisicaTransmissora (bitset<8> quadro) {
+	vector<int> fluxoBrutoDeBits; 
+
+  //alterar de acordo o teste
+	int tipoDeCodificacao = 1; 
+
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
 			fluxoBrutoDeBits =
@@ -54,17 +62,16 @@ void CamadaFisicaTransmissora (std::bitset<8> quadro) {
 * comunicacao, passando de um pontoA (transmissor) para um
 * ponto B (receptor)
 */
-void MeioDeComunicacao (std::vector<int> fluxoBrutoDeBits) {
+void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	//OBS IMPORTANTE: trabalhar com BITS e nao com BYTES!!!
-	std::vector<int> fluxoBrutoDeBitsPontoA;
-	std::vector<int> fluxoBrutoDeBitsPontoB;
+	vector<int> fluxoBrutoDeBitsPontoA;
+	vector<int> fluxoBrutoDeBitsPontoB;
 	fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
-	while (fluxoBrutoDeBitsPontoB.size()!= fluxoBrutoDeBitsPontoA.size()) {
-		fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA; //BITS! Sendo transferidos
+	while (fluxoBrutoDeBitsPontoB.size() != fluxoBrutoDeBitsPontoA.size()) {
+		fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA; // BITS Sendo transferidos
 	}//fim do while
 
-	//chama proxima camada
-	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
+	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, tam);
 }//fim do metodo MeioDeTransmissao
 
