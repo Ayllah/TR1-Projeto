@@ -1,5 +1,5 @@
 /*************************************************************
-* Camada Transmissora
+* Codificação
 *********************************************************** */
 #include "camadafisica.h"
 
@@ -47,62 +47,35 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoManchester
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> quadro){
-	//implementacao do algoritmo
 	vector <int> codigoManchesterDif; 
-	vector <int> temp; 
-	int trans = 0;
+
+	// numero de valores logicos 1 encontrados
+	int transicao = 0;	
 
 	cout << "Char em Binario: " << quadro << endl;
 
 	for(int i = 7; i >= 0; i--){
-		temp.push_back(quadro[i]);
-	}
-
-
-	for(int i = 0; i <= 7; i++){
-		if(temp[i] == 1){
-			trans++;
-			if(temp[0] == 1 && trans % 2 == 0) {
+		if(quadro[i] == 1) {
+			// incrementa o valor de transicao
+			transicao++;	
+			if(transicao % 2 == 0) {
 				codigoManchesterDif.push_back(0);
 				codigoManchesterDif.push_back(1);
-			}
-			else if (temp[0] == 1 && trans % 2 != 0){
+			}else {
 				codigoManchesterDif.push_back(1);
 				codigoManchesterDif.push_back(0);
-			}
-			else if(temp[0] == 0 && trans % 2 != 0) {
-				codigoManchesterDif.push_back(1);
-				codigoManchesterDif.push_back(0);
-			}
-			else if (temp[0] == 0 && trans % 2 == 0){
-				codigoManchesterDif.push_back(0);
-				codigoManchesterDif.push_back(1);
 			}
 		}
-		if(temp[i] == 0){
-			if(temp[0] == 0 && trans % 2 == 0) {
-				codigoManchesterDif.push_back(0);
-				codigoManchesterDif.push_back(1);
-			}
-			else if (temp[0] == 0 && trans % 2 != 0){
-				codigoManchesterDif.push_back(1);
-				codigoManchesterDif.push_back(0);
-			}
-			else if(temp[0] == 1){
-				trans++;
-				if(trans % 2 == 0){
-					codigoManchesterDif.push_back(0);
-					codigoManchesterDif.push_back(1);
-				}
-				else if(trans % 2 != 0){
-					codigoManchesterDif.push_back(1);
-					codigoManchesterDif.push_back(0);
-				}
 
-			} 
-						
-		}			
-		
+		if(quadro[i] == 0) {
+			if(transicao % 2 == 0) {
+				codigoManchesterDif.push_back(0);
+				codigoManchesterDif.push_back(1);
+			}else {
+				codigoManchesterDif.push_back(1);
+				codigoManchesterDif.push_back(0);
+			}
+		}
 	}
 
 	cout << "Char em Codigo Manchester Diferencial em Vetor de inteiros: ";
@@ -120,7 +93,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 
 
 /*************************************************************
-* Camada Receptora
+* Decodificação
 *********************************************************** */
 
 // Decodificação BINARIA
@@ -147,8 +120,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 			manchesterDecodificado.push_back(1);
 		}
 		i++; // i tem que incrementar de novo para ir de par em par
-		// reseta string de par de bits
-		parBits = "";
+		parBits = "";// reseta string de par de bits
 	}
 
 	return manchesterDecodificado;

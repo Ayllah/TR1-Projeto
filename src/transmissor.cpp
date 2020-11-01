@@ -1,6 +1,6 @@
 #include "camadafisica.h"
 
-int tam; // Armazena tamanho da entrada 
+int tamanhoMsg; // Armazena tamanho da entrada 
 
 void AplicacaoTransmissora () {
 	string mensagem;
@@ -13,25 +13,26 @@ void AplicacaoTransmissora () {
 }//fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora (string mensagem) {
-	bitset<8> bitArr;
+	bitset<8> quadroBitset;
 	// int quadro[8];
 	string s;
-  tam = mensagem.length();
+  tamanhoMsg = mensagem.length();
 
 	// loop em cada byte da mensagem de entrada
-	for (int i = 0; i < tam; ++i){
+	for (int i = 0; i < tamanhoMsg; ++i){
     cout << "------------------------" << endl;
 
-    // transforma char em inteiro 
-    int temp = ((int)(mensagem[i]));
-    bitArr = temp;
+    int valorAscii = ((int)(mensagem[i]));
 
-    // cout << "bitArr: " << bitArr << endl;
-		// s = bitset<8>(temp).to_string();
+		// armazena em forma de bitset de 8 bits
+    quadroBitset = valorAscii;	
+
+    // cout << "quadroBitset: " << quadroBitset << endl;
+		// s = bitset<8>(valorAscii).to_string();
 		// cout << "s: " << s << endl;
 
 		//chama a proxima camada
-		CamadaFisicaTransmissora(bitArr);
+		CamadaFisicaTransmissora(quadroBitset);
 	}
 
 }//fim do metodo CamadaDeAplicacaoTransmissora
@@ -39,7 +40,7 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 void CamadaFisicaTransmissora (bitset<8> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
-  //alterar de acordo o teste
+  // alterar de acordo o teste
 	int tipoDeCodificacao = 2; 
 
 	switch (tipoDeCodificacao) {
@@ -74,6 +75,6 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 		fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA; // BITS Sendo transferidos
 	}//fim do while
 
-	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, tam);
+	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, tamanhoMsg);
 }//fim do metodo MeioDeTransmissao
 
