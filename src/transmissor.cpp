@@ -14,9 +14,8 @@ void AplicacaoTransmissora () {
 
 void CamadaDeAplicacaoTransmissora (string mensagem) {
 	bitset<8> quadroBitset;
-	// int quadro[8];
 	string s;
-  tamanhoMsg = mensagem.length();
+  	tamanhoMsg = mensagem.length();
 
 	// loop em cada byte da mensagem de entrada
 	for (int i = 0; i < tamanhoMsg; ++i){
@@ -24,15 +23,11 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 
     int valorAscii = ((int)(mensagem[i]));
 
-		// armazena em forma de bitset de 8 bits
+	// armazena em forma de bitset de 8 bits
     quadroBitset = valorAscii;	
 
-    // cout << "quadroBitset: " << quadroBitset << endl;
-		// s = bitset<8>(valorAscii).to_string();
-		// cout << "s: " << s << endl;
-
-		//chama a proxima camada
-		CamadaFisicaTransmissora(quadroBitset);
+	//chama a proxima camada
+	CamadaFisicaTransmissora(quadroBitset);
 	}
 
 }//fim do metodo CamadaDeAplicacaoTransmissora
@@ -41,7 +36,7 @@ void CamadaFisicaTransmissora (bitset<8> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeCodificacao = 2; 
+	int tipoDeCodificacao = 0; 
 
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
