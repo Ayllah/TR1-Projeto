@@ -1,5 +1,5 @@
 /*************************************************************
-* Codificação
+* Camada Transmissora - Codificação
 *********************************************************** */
 #include "camadafisica.h"
 
@@ -34,8 +34,6 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 	}
 
 	cout << "Char em Codigo Manchester em Vetor de inteiros: ";
-
-	// tamanho do binario em codificacao manchester
 	int size = codigoManchester.size();
 
 	for(int i = 0; i < size; i++) {
@@ -54,9 +52,10 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 
 	cout << "Char em Binario: " << quadro << endl;
 
+	// percorre ao contrario por conta da disposição do bitset
 	for(int i = 7; i >= 0; i--){
 		if(quadro[i] == 1) {
-			// incrementa o valor de transicao
+			// incrementa o valor de transicao a cada valor logico 1 encontrado
 			transicao++;	
 			if(transicao % 2 == 0) {
 				codigoManchesterDif.push_back(0);
@@ -79,7 +78,6 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 	}
 
 	cout << "Char em Codigo Manchester Diferencial em Vetor de inteiros: ";
-	// tamanho do binario em codificacao manchester diferencial
 	int size = codigoManchesterDif.size();
 
 	for(int i = 0; i < size; i++) {
@@ -88,17 +86,16 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 	cout << endl;
 
 	return codigoManchesterDif;
-
 }//fim do CamadaFisicaTransmissoraCodificacaoManchesterDiferencial
 
 
 /*************************************************************
-* Decodificação
+* Camada Receptora - Decodificação
 *********************************************************** */
 
 // Decodificação BINARIA
 vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (vector<int> quadro) {
-	return quadro;
+	return quadro; 
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoBinaria
 
 // Decodificação MANCHESTER
@@ -129,20 +126,18 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 // Decodificação MANCHESTER DIFERENCIAL
 vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> quadro){
 	vector<int> manchesterDifDecodificado; 
-	string parBits;	// armazena pares de bits do quadro codificado em manchester diferencial
-	string parBits2;	// armazena pares de bits do quadro codificado em manchester diferencial
+
+	// armazenam pares de bits do quadro codificado em manchester diferencial
+	string parBits;		
+	string parBitsSeguinte;	
 
 	for(int i = 0; i < 16; i++) {
 		// forma o par de bits
 		parBits += to_string(quadro[i]);
 		parBits += to_string(quadro[i + 1]);
 
-		/*cout << "---------------------------"<< endl;
-		cout << "parBits: "<< parBits << endl;
-		cout << "---------------------------"<< endl;*/
-
-
-		if(i == 0 && (i+1) == 1){		
+		// caso for o primeiro par de bits no quadro
+		if(i == 0){		
 			// decodificando para codificacao binaria usual 
 			if(parBits == "01"){
 				manchesterDifDecodificado.push_back(0);
@@ -152,30 +147,27 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 			}
 		}
 
-			if(i < 14){
-				parBits2 += to_string(quadro[i + 2]);
-				parBits2 += to_string(quadro[i + 3]);
+		// caso nao seja o ultimo par de bits do quadro
+		if(i < 14){
+			// forma o par de bits seguinte
+			parBitsSeguinte += to_string(quadro[i + 2]);
+			parBitsSeguinte += to_string(quadro[i + 3]);
+	
+			// caso sejam iguais -> valor logico 0
+			if(parBits == parBitsSeguinte){
+				manchesterDifDecodificado.push_back(0);
+			}
+			else if(parBits != parBitsSeguinte){
+				manchesterDifDecodificado.push_back(1);
+			}
+		}	 
 
-				/*cout << "---------------------------"<< endl;
-				cout << "parBits2: "<< parBits2 << endl;
-				cout << "---------------------------"<< endl;*/
-
-				// decodificando para codificacao binaria usual 
-				if(parBits == parBits2){
-					manchesterDifDecodificado.push_back(0);
-				}
-				else if(parBits != parBits2){
-					manchesterDifDecodificado.push_back(1);
-				}
-				
-			}	
-			i++; // i tem que incrementar de novo para ir de par em par
-			// reseta string de par de bits
-			parBits = "";
-			parBits2 = "";					
+		i++; // i tem que incrementar de novo para ir de par em par
+		// reseta pares de bits
+		parBits = "";
+		parBitsSeguinte = "";					
 	}
 
 	return manchesterDifDecodificado;
-
 }//fim do CamadaFisicaReceptoraDecodificacaoManchesterDiferencial
 
