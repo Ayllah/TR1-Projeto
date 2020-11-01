@@ -15,7 +15,8 @@ void AplicacaoTransmissora () {
 void CamadaDeAplicacaoTransmissora (string mensagem) {
 	bitset<8> quadroBitset;
 	string s;
-  	tamanhoMsg = mensagem.length();
+	
+	tamanhoMsg = mensagem.length();
 
 	// loop em cada byte da mensagem de entrada
 	for (int i = 0; i < tamanhoMsg; ++i){
@@ -23,11 +24,11 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 
     int valorAscii = ((int)(mensagem[i]));
 
-	// armazena em forma de bitset de 8 bits
+		// armazena em forma de bitset de 8 bits
     quadroBitset = valorAscii;	
 
-	//chama a proxima camada
-	CamadaFisicaTransmissora(quadroBitset);
+		//chama a proxima camada
+		CamadaFisicaTransmissora(quadroBitset);
 	}
 
 }//fim do metodo CamadaDeAplicacaoTransmissora
