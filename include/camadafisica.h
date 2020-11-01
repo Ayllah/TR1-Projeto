@@ -22,8 +22,22 @@ void AplicacaoTransmissora ();
 void CamadaFisicaTransmissora (bitset<8> quadro);
 void CamadaDeAplicacaoTransmissora (string mensagem);
 
+
+/* 
+*/
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (bitset<8> quadro);
+
+/*	Essa função recebe um quadro de 8 bits e utiliza a codificação Manchester.
+*	Na codificação Manchester um 0 lógico é indicado por uma transição de 0 
+*   para 1 no centro do bit e um 1 lógico é indicado por uma transição de 1 
+*	para 1 para 0. */
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro);
+
+
+/*	Essa função recebe um quadro de 8 bits e utiliza a codificação Manchester Diferencial.
+*	Na codificação Manchester Diferencial  a transição no meio do bit é usada apenas para 
+*   sincronização. A representação do bit é definida pela inversão “bit 0” ou não inversão 
+*  “bit 1” no início do bit.*/
 vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> quadro);
 
 /*************************************************************
