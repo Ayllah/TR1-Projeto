@@ -33,7 +33,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 		}
 	}
 
-	cout << "Char em Codigo Manchester em Vetor de inteiros: ";
+	cout << "Char em Codigo Manchester: ";
 	int size = codigoManchester.size();
 
 	for(int i = 0; i < size; i++) {
@@ -77,7 +77,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 		}
 	}
 
-	cout << "Char em Codigo Manchester Diferencial em Vetor de inteiros: ";
+	cout << "Char em Codigo Manchester Diferencial: ";
 	int size = codigoManchesterDif.size();
 
 	for(int i = 0; i < size; i++) {
@@ -109,7 +109,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 		parBits += to_string(quadro[i]);
 		parBits += to_string(quadro[i + 1]);
 
-		// decodificando para codificacao binaria usual 
+		// decodificando para codificacao manchester usual 
 		if(parBits == "01"){
 			manchesterDecodificado.push_back(0);
 		}
@@ -138,7 +138,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 
 		// caso for o primeiro par de bits no quadro
 		if(i == 0){		
-			// decodificando para codificacao binaria usual 
+			// decodificando para codificacao manchester usual 
 			if(parBits == "01"){
 				manchesterDifDecodificado.push_back(0);
 			}
