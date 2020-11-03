@@ -3,26 +3,17 @@
 *********************************************************** */
 #include "camadafisica.h"
 
-vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (bitset<8> quadro) {
-	vector<int> codigoBinario;
-
-	cout << "Char Codificado em Binario: " << quadro << endl;
-
-	// insere ao final do vetor de inteiros
-	for(int i = 7; i >= 0; i--) {
-		codigoBinario.push_back(quadro[i]);
-	}
-
-	return codigoBinario;
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
+	return quadro;
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
-vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 	vector <int> codigoManchester; 
 	string codigoManchesterStr;
 
-	cout << "Char em Binario: " << quadro << endl;
+	int tam = quadro.size();
 
-	for(int i = 7; i >= 0; i--){
+	for(int i = 0; i <= tam; i++){
 		if(quadro[i] == 0){
 			codigoManchester.push_back(0);
 			codigoManchester.push_back(1);
@@ -33,7 +24,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 		}
 	}
 
-	cout << "Char em Codigo Manchester: ";
+	cout << "Codigo Manchester: ";
 	int size = codigoManchester.size();
 
 	for(int i = 0; i < size; i++) {
@@ -44,16 +35,15 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro) {
 	return codigoManchester;
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoManchester
 
-vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> quadro){
+vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(vector<int> quadro){
 	vector <int> codigoManchesterDif; 
+	int tam = quadro.size();
 
 	// numero de valores logicos 1 encontrados
 	int transicao = 0;	
 
-	cout << "Char em Binario: " << quadro << endl;
-
 	// percorre ao contrario por conta da disposição do bitset
-	for(int i = 7; i >= 0; i--){
+	for(int i = 0; i <= tam; i++){
 		if(quadro[i] == 1) {
 			// incrementa o valor de transicao a cada valor logico 1 encontrado
 			transicao++;	
@@ -77,7 +67,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> q
 		}
 	}
 
-	cout << "Char em Codigo Manchester Diferencial: ";
+	cout << "Codigo Manchester Diferencial: ";
 	int size = codigoManchesterDif.size();
 
 	for(int i = 0; i < size; i++) {
@@ -104,7 +94,9 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 	vector<int> manchesterDecodificado; 
 	string parBits;	// armazena pares de bits do quadro codificado em manchester
 
-	for(int i = 0; i < 16; i++) {
+	int tam = quadro.size();
+
+	for(int i = 0; i < tam; i++) {
 		// forma o par de bits
 		parBits += to_string(quadro[i]);
 		parBits += to_string(quadro[i + 1]);
@@ -131,7 +123,9 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 	string parBits;		
 	string parBitsSeguinte;	
 
-	for(int i = 0; i < 16; i++) {
+	int tam = quadro.size();
+
+	for(int i = 0; i < tam; i++) {
 		// forma o par de bits
 		parBits += to_string(quadro[i]);
 		parBits += to_string(quadro[i + 1]);
@@ -148,7 +142,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 		}
 
 		// caso nao seja o ultimo par de bits do quadro
-		if(i < 14){
+		if(i < tam - 2){
 			// forma o par de bits seguinte
 			parBitsSeguinte += to_string(quadro[i + 2]);
 			parBitsSeguinte += to_string(quadro[i + 3]);
