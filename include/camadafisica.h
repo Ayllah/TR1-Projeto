@@ -18,22 +18,22 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits);
 *************************************************************/
 
 void AplicacaoTransmissora ();
-void CamadaFisicaTransmissora (bitset<8> quadro);
 void CamadaDeAplicacaoTransmissora (string mensagem);
+void CamadaFisicaTransmissora (vector<int> quadro);
 
 /**
  * Recebe um quadro de 8 bits e utiliza a codificação Binária.
  * Na Codificação binária retorna o quadro de 8 bits com os mesmos
  * valores lógicos entre cada clock
 */
-vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (bitset<8> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro);
 
 /**
  * Recebe um quadro de 8 bits e utiliza a codificação Manchester.
  * Na codificação Manchester um 0 lógico gera uma transição de 0 para 1 
  * no centro do bit e um 1 lógico é gera uma transição de 1 para 0
 */
-vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro);
 
 /**
  * Recebe um quadro de 8 bits e utiliza a codificação Manchester Diferencial.
@@ -41,14 +41,14 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (bitset<8> quadro);
  * sincronização. A representação do bit é definida pela inversão “bit 0” ou não inversão 
  * “bit 1” no início do bit.
 */
-vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(bitset<8> quadro);
+vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(vector<int> quadro);
 
 /*************************************************************
 * Camada Receptora
 *************************************************************/
 
 void AplicacaoReceptora (string mensagem);
-void CamadaFisicaReceptora (vector<int> quadro, int tam);
+void CamadaFisicaReceptora (vector<int> quadro);
 void CamadaDeAplicacaoReceptora (vector<int> quadro);
 
 /**

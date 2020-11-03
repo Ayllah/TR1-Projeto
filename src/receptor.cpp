@@ -1,16 +1,10 @@
 #include "camadafisica.h"
 
-int tamanhoMsgRecepcao; // tamanho da mensagem de entrada
-int cont = 0;
-string msgRecebida = ""; // armazena resultado da decodificacao
-
-void CamadaFisicaReceptora (vector<int> quadro, int tamanhoMsg) {
-  // armazena tamanho da camada fisica transmissora
-  tamanhoMsgRecepcao = tamanhoMsg;
+void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeDecodificacao = 0; 
+	int tipoDeDecodificacao = 2; 
   
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
@@ -32,32 +26,42 @@ void CamadaFisicaReceptora (vector<int> quadro, int tamanhoMsg) {
 
 
 void CamadaDeAplicacaoReceptora (vector<int> quadro) {
-	string mensagem; 
+	string mensagem, mensagemRecebida, letraMsg; 
 	int valorAscii;	// Armazena o valor decimal na tabela Ascii de cada quadro
 	char letra;
 
+	int tam = quadro.size();
+
   // converte quadro de vetor de inteiros para string
-	for (int i = 0; i < 8; i++){
+	for (int i = 0; i < tam; i++){
 		mensagem += to_string(quadro[i]);
 	}
-	cout << "Char em Binario Decodificado: "<< mensagem << endl;
 
-  // pega valor decimal da tabela ASCII do string em binario
-	valorAscii = stoi(mensagem, 0, 2);
-	cout << "Valor ASCII: "<< valorAscii << endl;
+	cout << "Quadro de Bits Decodificado: "<< mensagem << endl;
 
-  // casting do valor ASCII para char
-	letra = (char)valorAscii;
-	cout << "Letra: "<< letra << endl;
+	for (int i = 0; i < tam/8; i++){
 
-	msgRecebida += letra;
+		for (int j = i*8; j <= i*8+7; j++){
+			letraMsg += mensagem[j];
+		}
 
-	AplicacaoReceptora(msgRecebida);
+		cout << "Letra em bits: " << letraMsg << endl;
+
+		// pega valor decimal da tabela ASCII do string em binario
+		valorAscii = stoi(letraMsg, 0, 2);
+		cout << "Valor ASCII: "<< valorAscii << endl;
+
+		// casting do valor ASCII para char
+		letra = (char)valorAscii;
+		cout << "Letra: "<< letra << endl;
+		
+		letraMsg = "";
+		mensagemRecebida += letra;
+	}
+
+	AplicacaoReceptora(mensagemRecebida);
 }//fim do metodo CamadaDeAplicacaoReceptora
 
 void AplicacaoReceptora (string mensagem) {
-  cont++;
-  if(cont == tamanhoMsgRecepcao) {
-    cout << "\n\nA mensagem recebida foi: " << mensagem << endl;
-  }
+	cout << "\n\nA mensagem recebida foi: " << mensagem << endl;
 }//fim do metodo AplicacaoReceptora 
