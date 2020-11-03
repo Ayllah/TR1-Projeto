@@ -45,6 +45,7 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
 			letraMsg += mensagem[j];
 		}
 
+		cout << "-------------------" << endl;
 		cout << "Letra em bits: " << letraMsg << endl;
 
 		// pega valor decimal da tabela ASCII do string em binario
