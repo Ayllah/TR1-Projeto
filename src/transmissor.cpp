@@ -1,5 +1,9 @@
 #include "camadafisica.h"
 
+/*************************************************************
+* 						Camada Fisica
+*************************************************************/
+
 int tamanhoMsg; // Armazena tamanho da entrada 
 
 void AplicacaoTransmissora () {
