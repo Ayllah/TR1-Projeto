@@ -84,26 +84,26 @@ void CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
     switch (tipoDeEnquadramento) {
         case 0 : //contagem de caracteres
             quadroDesenquadrado =
-            CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(quadro);
+            CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(quadro);
             break;
         case 1 : //insercao de bytes
             quadroDesenquadrado =
-            CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(quadro);
+            CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
             break;
         case 2 : //insercao de bits
             quadroDesenquadrado =
-            CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits(quadro);
+            CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits(quadro);
 }//fim do switch/case
 }//fim do metodo CamadaEnlaceDadosReceptoraEnquadramento
 
-void CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
     //implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraContagemDeCaracteres
 
-void CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {
     //implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBytes
 
-void CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro) {
     //implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBits
