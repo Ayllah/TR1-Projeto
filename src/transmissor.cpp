@@ -89,7 +89,7 @@ void CamadaEnlaceDadosTransmissora (bitset<8> quadro) {
 
 
 void CamadaEnlaceDadosTransmissoraEnquadramento (bitset<8> quadro) {
-    int tipoDeEnquadramento= -1; //alterar de acordo com o teste
+    int tipoDeEnquadramento = -1; //alterar de acordo com o teste
     vector<int> quadroEnquadrado;
 	
     switch (tipoDeEnquadramento) {
@@ -107,14 +107,14 @@ void CamadaEnlaceDadosTransmissoraEnquadramento (bitset<8> quadro) {
     }//fim do switch/case
 }//fim do metodo CamadaEnlaceTransmissoraEnquadramento
 
-void CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (bitset<8> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (bitset<8> quadro) {
     //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraContagemDeCaracteres
 
-void CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (bitset<8> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (bitset<8> quadro) {
     //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraInsercaoDeBytes
 
-void CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (bitset<8> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (bitset<8> quadro) {
     //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraInsercaoDeBits
