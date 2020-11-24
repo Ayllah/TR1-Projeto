@@ -11,7 +11,7 @@ string msgRecebida = ""; // armazena resultado da decodificacao
 
 void CamadaFisicaReceptora (vector<int> quadro, int tamanhoMsg) {
   // armazena tamanho da camada fisica transmissora
-  	tamanhoMsgRecepcao = tamanhoMsg;
+	tamanhoMsgRecepcao = tamanhoMsg;
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
@@ -72,38 +72,38 @@ void AplicacaoReceptora (string mensagem) {
 *************************************************************/
 
 void CamadaEnlaceDadosReceptora (vector<int> quadro) {
-    CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
-    //chama proxima camada
-    CamadaDeAplicacaoReceptora(quadro);
+	CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
+	//chama proxima camada
+	CamadaDeAplicacaoReceptora(quadro);
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 void CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-    int tipoDeEnquadramento = 0; //alterar de acordo com o teste
-    vector<int> quadroDesenquadrado;
-	
-    switch (tipoDeEnquadramento) {
-        case 0 : //contagem de caracteres
-            quadroDesenquadrado =
-            CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(quadro);
-            break;
-        case 1 : //insercao de bytes
-            quadroDesenquadrado =
-            CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
-            break;
-        case 2 : //insercao de bits
-            quadroDesenquadrado =
-            CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits(quadro);
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	vector<int> quadroDesenquadrado;
+
+	switch (tipoDeEnquadramento) {
+		case 0 : //contagem de caracteres
+			quadroDesenquadrado =
+			CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(quadro);
+			break;
+		case 1 : //insercao de bytes
+			quadroDesenquadrado =
+			CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
+			break;
+		case 2 : //insercao de bits
+			quadroDesenquadrado =
+			CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits(quadro);
 }//fim do switch/case
 }//fim do metodo CamadaEnlaceDadosReceptoraEnquadramento
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
-    //implementacao do algoritmo para DESENQUADRAR
+	//implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraContagemDeCaracteres
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {
-    //implementacao do algoritmo para DESENQUADRAR
+	//implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBytes
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro) {
-    //implementacao do algoritmo para DESENQUADRAR
+	//implementacao do algoritmo para DESENQUADRAR
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBits
