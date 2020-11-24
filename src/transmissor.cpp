@@ -1,4 +1,5 @@
 #include "camadafisica.h"
+#include "camadaenlace.h"
 
 /*************************************************************
 * 						Camada Fisica
@@ -13,7 +14,7 @@ void AplicacaoTransmissora () {
 	// Armazena mensagem de entrada a ser enviada
 	getline(cin, mensagem );
 	
-	CamadaDeAplicacaoTransmissora(mensagem); 
+	CamadaEnlaceDadosTransmissora(mensagem); 
 }//fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora (string mensagem) {
@@ -46,8 +47,7 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 	}
 	cout << "\n";
 
-	//* Chama camada de Enlace de dados Transmissora
-	CamadaEnlaceDadosTransmissora(quadro);
+	CamadaFisicaTransmissora(quadro);
 }//fim do metodo CamadaDeAplicacaoTransmissora
 
 void CamadaFisicaTransmissora (vector<int> quadro) {
