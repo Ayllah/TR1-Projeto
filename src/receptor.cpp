@@ -32,7 +32,7 @@ void CamadaFisicaReceptora (vector<int> quadro, int tamanhoMsg) {
 			break;
 	}//fim do switch/case
 
-	CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+	CamadaEnlaceDadosReceptora(fluxoBrutoDeBits);
 }//fim do metodo CamadaFisicaTransmissora
 
 
