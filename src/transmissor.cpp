@@ -14,7 +14,7 @@ void AplicacaoTransmissora () {
 	// Armazena mensagem de entrada a ser enviada
 	getline(cin, mensagem );
 	
-	CamadaEnlaceDadosTransmissora(mensagem); 
+	CamadaDeAplicacaoTransmissora(mensagem); 
 }//fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora (string mensagem) {
@@ -47,7 +47,7 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 	}
 	cout << "\n";
 
-	CamadaFisicaTransmissora(quadro);
+	CamadaEnlaceDadosTransmissora(quadro);
 }//fim do metodo CamadaDeAplicacaoTransmissora
 
 void CamadaFisicaTransmissora (vector<int> quadro) {
