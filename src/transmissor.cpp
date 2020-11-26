@@ -73,7 +73,7 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeCodificacao = 0; 
+	int tipoDeCodificacao = 1; 
 
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
@@ -121,7 +121,7 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -235,7 +235,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 
 	int tam = quadroInt.size();
 
-	cout << "Quadro ENQUADRADO: ";
+	cout << "Quadro ENQUADRADO (Contagem de Caracteres): ";
 	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadroInt[i];
@@ -335,7 +335,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 
 	int tam = quadroEnquadradoInt.size();
 
-	cout << "Quadro ENQUADRADO: ";
+	cout << "Quadro ENQUADRADO (Insercao de Bytes): ";
 	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadroEnquadradoInt[i];

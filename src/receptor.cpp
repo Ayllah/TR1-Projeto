@@ -9,7 +9,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeDecodificacao = 0; 
+	int tipoDeDecodificacao = 1; 
   
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
@@ -82,7 +82,7 @@ void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -127,7 +127,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<
 	}
 
 	int tam = quadro.size();
-	cout << "Quadro DESENQUADRADO: ";
+	cout << "Quadro DESENQUADRADO (Contagem de Caracteres): ";
 	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadro[i];
@@ -202,7 +202,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 
 	int tam = quadroDesenquadradoInt.size();
 
-	cout << "Quadro DESENQUADRADO: ";
+	cout << "Quadro DESENQUADRADO (Insercao de Bytes): ";
 	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadroDesenquadradoInt[i];
