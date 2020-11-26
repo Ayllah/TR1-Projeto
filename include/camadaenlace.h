@@ -7,7 +7,7 @@
 * Camada Transmissora
 *************************************************************/
 void CamadaEnlaceDadosTransmissora (vector<int> quadro);
-void CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro);
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vector<int> quadro);
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<int> quadro);
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int> quadro);
@@ -16,7 +16,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 * Camada Receptora
 *************************************************************/
 void CamadaEnlaceDadosReceptora (vector<int> quadro);
-void CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro);
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro);
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro);
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro);

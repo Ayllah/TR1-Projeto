@@ -85,6 +85,13 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(vector<int>
 
 // Decodificação BINARIA
 vector<int> CamadaFisicaReceptoraDecodificacaoBinaria (vector<int> quadro) {
+	int tam = quadro.size();
+	cout << "BINARIO DECODIFICADO: ";
+	// converte quadro de vetor de inteiros para string
+	for (int i = 0; i < tam; i++){
+		cout << quadro[i];
+	}
+	cout << endl;
 	return quadro; 
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoBinaria
 
@@ -111,6 +118,14 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchester (vector<int> quadro) {
 		i++; // i tem que incrementar de novo para ir de par em par
 		parBits = "";// reseta string de par de bits
 	}
+
+	int size = manchesterDecodificado.size();
+	cout << "MANCHESTER DECODIFICADO: ";
+	// converte quadro de vetor de inteiros para string
+	for (int i = 0; i < size; i++){
+		cout << manchesterDecodificado[i];
+	}
+	cout << endl;
 
 	return manchesterDecodificado;
 }//fim do metodo CamadaFisicaReceptoraDecodificacaoManchester
@@ -161,6 +176,14 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 		parBits = "";
 		parBitsSeguinte = "";					
 	}
+
+	int size = manchesterDifDecodificado.size();
+	cout << "MANCHESTER DIFERENCIAL DECODIFICADO: ";
+	// converte quadro de vetor de inteiros para string
+	for (int i = 0; i < size; i++){
+		cout << manchesterDifDecodificado[i];
+	}
+	cout << endl;
 
 	return manchesterDifDecodificado;
 }//fim do CamadaFisicaReceptoraDecodificacaoManchesterDiferencial
