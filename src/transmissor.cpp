@@ -1,6 +1,35 @@
 #include "camadafisica.h"
 #include "camadaenlace.h"
 
+string decimalToBinary(int number) {
+  string binary = "";
+
+  while(number > 0) {
+    binary = to_string(number % 2) + binary;
+    number /= 2;
+  }
+
+	// cout << binary << endl;
+
+  return binary;
+}
+
+string  decToBinary(int n) { 
+	string binaryStr = "";
+
+	// Size of an integer is assumed to be 32 bits 
+	for (int i = 7; i >= 0; i--) { 
+			int k = n >> i; 
+			if (k & 1) 
+					binaryStr += "1"; 
+			else
+					binaryStr += "0"; 
+	} 
+
+		// cout << binaryStr << endl;
+	return binaryStr;
+} 
+
 /*************************************************************
 * 						Camada Fisica
 *************************************************************/
@@ -102,14 +131,14 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {
-		// case 0 : //contagem de caracteres
-		// 	quadroEnquadrado =
-		// 	CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(quadro);
-		// 	break;
+		case 0 : //contagem de caracteres
+			quadroEnquadrado =
+			CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres(quadro);
+			break;
 		case 1 : //insercao de bytes
 			quadroEnquadrado =
 			CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes(quadro);
@@ -122,9 +151,108 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
 	return quadroEnquadrado;
 }//fim do metodo CamadaEnlaceTransmissoraEnquadramento
 
-// vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
-// 	//implementacao do algoritmo
-// }//fim do metodo CamadaEnlaceDadosTransmissoraContagemDeCaracteres
+vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
+	//implementacao do algoritmo
+	int cont = 0;
+	vector<int> contQuadro;
+	vector<int> quadroInt;
+
+	//int tamQuadro = quadro.size();
+
+	int qtdBytesQuadro = quadro.size()/8; 
+
+	string headerStr;
+	string headerBinaria;
+
+	int tamHeaderStr;
+
+	int indice = 0;
+
+	if (qtdBytesQuadro % 4 == 0) {
+		int qntQuadros = qtdBytesQuadro/4;																																						
+
+		headerStr = decimalToBinary(5);	
+		for (int j = 0; j < qntQuadros; j++){	
+
+			tamHeaderStr = headerStr.length();
+			
+			for (int i = 0; i < tamHeaderStr; i++) {
+				//quadro.push_back(msgBinaria[i]);
+
+				// Code ASCII 0
+				if (headerStr[i] == 48)
+					quadroInt.push_back(0);
+
+				// Code ASCII 1
+				if (headerStr[i] == 49)
+					quadroInt.push_back(1);
+			}	
+
+			for(int i = 0+indice; i < 32+indice; i++){																									
+				quadroInt.push_back(quadro[i]);
+			}				
+
+			indice += 32;
+		}																																														
+	}	
+
+	if (qtdBytesQuadro % 4 != 0) {
+			int resto = qtdBytesQuadro % 4; 
+			int qtdQuadros = qtdBytesQuadro/4;																																
+
+		do{
+
+			if (qtdQuadros == 0){
+				headerStr = decToBinary(resto+1);	
+			}else{
+				headerStr = decToBinary(5);	
+			}
+
+			tamHeaderStr = headerStr.length();
+
+			for (int i = 0; i < tamHeaderStr; i++) {
+				//quadro.push_back(msgBinaria[i]);
+
+				// Code ASCII 0
+				if (headerStr[i] == 48)
+					quadroInt.push_back(0);
+
+				// Code ASCII 1
+				if (headerStr[i] == 49)
+					quadroInt.push_back(1);	
+			}																																														
+	
+			// Caso ultimo loop
+			if(cont == qtdQuadros) {  
+
+				headerStr = decToBinary(resto+1);	
+				for(int i = 0+indice; i < indice + (resto*8); i++)																								
+					quadroInt.push_back(quadro[i]);
+					
+			} else {
+				for(int i = 0+indice; i < 32+indice; i++)																								
+					quadroInt.push_back(quadro[i]);
+			}					
+
+			// cout << "headerStr: " << headerStr << endl;
+
+			indice += 32;
+			cont++;
+		}while(cont <= qtdQuadros);
+	}				
+
+	int tam = quadroInt.size();
+
+	cout << "Quadro ENQUADRADO: ";
+	// converte quadro de vetor de inteiros para string
+	for (int i = 0; i < tam; i++){
+		cout << quadroInt[i];
+	}
+	cout << endl;
+
+	return quadroInt;
+	
+}//fim do metodo CamadaEnlaceDadosTransmissoraContagemDeCaracteres
 
 //implementacao do algoritmo para ENQUADRAR por insercao de Bytes
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {

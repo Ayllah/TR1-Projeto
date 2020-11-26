@@ -82,14 +82,14 @@ void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {
-		// case 0 : //contagem de caracteres
-		// 	quadroDesenquadrado =
-		// 	CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(quadro);
-		// 	break;
+		case 0 : //contagem de caracteres
+			quadroDesenquadrado =
+			CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres(quadro);
+			break;
 		case 1 : //insercao de bytes
 			quadroDesenquadrado =
 			CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes(quadro);
@@ -102,9 +102,40 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
 	return quadroDesenquadrado;
 }//fim do metodo CamadaEnlaceDadosReceptoraEnquadramento
 
-// vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
-// 	//implementacao do algoritmo para DESENQUADRAR
-// }//fim do metodo CamadaEnlaceDadosReceptoraContagemDeCaracteres
+vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
+	//implementacao do algoritmo para DESENQUADRAR
+	int tamQuadro = quadro.size();
+	int count = 0;
+	int count2 = 0;
+	string headerStr;
+
+	while (count2 < tamQuadro){
+
+		for (int i = count+1; i < 8+count; i++) {
+			headerStr += to_string(quadro[i]);
+		}
+
+		int headerInt = stoi(headerStr, 0, 2);
+		// cout << "headerInt: " << headerInt << endl;
+
+		headerStr = "";
+
+		quadro.erase(quadro.begin()+count, quadro.begin()+count+8);
+		count += (8*(headerInt-1));
+
+		count2 += (8*headerInt);
+	}
+
+	int tam = quadro.size();
+	cout << "Quadro DESENQUADRADO: ";
+	// converte quadro de vetor de inteiros para string
+	for (int i = 0; i < tam; i++){
+		cout << quadro[i];
+	}
+	cout << endl;
+    
+	return quadro;
+}//fim do metodo CamadaEnlaceDadosReceptoraContagemDeCaracteres
 
 //implementacao do algoritmo para DESENQUADRAR por insercao de Bytes
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {
