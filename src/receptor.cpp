@@ -6,10 +6,10 @@
 *************************************************************/
 
 void CamadaFisicaReceptora (vector<int> quadro) {
-	vector<int> fluxoBrutoDeBits; 
+	vector<int> fluxoBrutoDeBits;
 
   // alterar de acordo o teste
-	int tipoDeDecodificacao = 1; 
+	int tipoDeDecodificacao = 1;
   
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria

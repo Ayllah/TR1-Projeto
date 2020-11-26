@@ -1,25 +1,6 @@
 #include "camadafisica.h"
 #include "camadaenlace.h"
 
-string decimalToBinary(int number) {
-  string binary = "";
-
-  while(number > 0) {
-    binary = to_string(number % 2) + binary;
-    number /= 2;
-  }
-
-	int restante = 8 - binary.length();
-
-	for (int i = 0; i < restante; i++){
-    binary = "0" + binary;
-	}
-	
-	cout << "binary: " << binary << endl;
-
-  return binary;
-}
-
 /*************************************************************
 * 						Camada Fisica
 *************************************************************/
@@ -279,7 +260,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 		return quadroEnquadradoInt;
 
 	do{
-		quadroEnquadradoStr += byteFlag;	// flag inicial
+		quadroEnquadradoStr += byteFlag;	// flag inicial 
 		for (i = 1; i <= 4; i++){
 			// pega cada byte individual da carga util
 			for (j = indice; j <= (indice+7); j++){

@@ -3,6 +3,8 @@
 
 #include "camadafisica.h"
 
+string decimalToBinary(int number);
+
 /*************************************************************
 * Camada Transmissora
 *************************************************************/
