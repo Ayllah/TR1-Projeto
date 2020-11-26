@@ -171,11 +171,13 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 	if (qtdBytesQuadro % 4 == 0) {
 		int qntQuadros = qtdBytesQuadro/4;																																						
 
-		headerStr = decimalToBinary(5);	
+		headerStr = decToBinary(5);	
+		tamHeaderStr = headerStr.length();
+
+		cout << "tamHeaderStr: " << tamHeaderStr << endl;
+
 		for (int j = 0; j < qntQuadros; j++){	
 
-			tamHeaderStr = headerStr.length();
-			
 			for (int i = 0; i < tamHeaderStr; i++) {
 				//quadro.push_back(msgBinaria[i]);
 
