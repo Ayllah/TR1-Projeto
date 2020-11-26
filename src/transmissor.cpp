@@ -9,26 +9,16 @@ string decimalToBinary(int number) {
     number /= 2;
   }
 
-	// cout << binary << endl;
+	int restante = 8 - binary.length();
+
+	for (int i = 0; i < restante; i++){
+    binary = "0" + binary;
+	}
+	
+	cout << "binary: " << binary << endl;
 
   return binary;
 }
-
-string  decToBinary(int n) { 
-	string binaryStr = "";
-
-	// Size of an integer is assumed to be 32 bits 
-	for (int i = 7; i >= 0; i--) { 
-			int k = n >> i; 
-			if (k & 1) 
-					binaryStr += "1"; 
-			else
-					binaryStr += "0"; 
-	} 
-
-		// cout << binaryStr << endl;
-	return binaryStr;
-} 
 
 /*************************************************************
 * 						Camada Fisica
@@ -171,7 +161,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 	if (qtdBytesQuadro % 4 == 0) {
 		int qntQuadros = qtdBytesQuadro/4;																																						
 
-		headerStr = decToBinary(5);	
+		headerStr = decimalToBinary(5);	
 		tamHeaderStr = headerStr.length();
 
 		cout << "tamHeaderStr: " << tamHeaderStr << endl;
@@ -205,9 +195,9 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 		do{
 
 			if (qtdQuadros == 0){
-				headerStr = decToBinary(resto+1);	
+				headerStr = decimalToBinary(resto+1);	
 			}else{
-				headerStr = decToBinary(5);	
+				headerStr = decimalToBinary(5);	
 			}
 
 			tamHeaderStr = headerStr.length();
@@ -227,7 +217,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 			// Caso ultimo loop
 			if(cont == qtdQuadros) {  
 
-				headerStr = decToBinary(resto+1);	
+				headerStr = decimalToBinary(resto+1);	
 				for(int i = 0+indice; i < indice + (resto*8); i++)																								
 					quadroInt.push_back(quadro[i]);
 					
