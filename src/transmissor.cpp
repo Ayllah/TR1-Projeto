@@ -240,7 +240,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 	string byteESC = "00000000"; 
 
 	string quadroEnquadradoStr = "";
-	string tempStr = "";
+	string byteStr = "";
 
 	int i, j, indice = 0, cont = 0, contFlag = 0, contESC = 0;
 	int qtdBytesQuadro = bitsQuadro / 8; 
@@ -263,27 +263,27 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 		for (i = 1; i <= 4; i++){
 			// pega cada byte individual da carga util
 			for (j = indice; j <= (indice+7); j++){
-				tempStr += quadroStr[j];	
+				byteStr += quadroStr[j];	
 			}
 
 			// caso tenha padrão ESC ou Flag na carga util
-			if (tempStr == byteFlag || tempStr == byteESC) {
+			if (byteStr == byteFlag || byteStr == byteESC) {
 				cout << "Existe Flag ou Escape na carga util!" << endl;
 				// Caso tenha o padrão Flag na carga Util 
-				if (tempStr == byteFlag){
-					quadroEnquadradoStr += byteESC + tempStr;
+				if (byteStr == byteFlag){
+					quadroEnquadradoStr += byteESC + byteStr;
 					contFlag++;
 				}
 				// Caso tenha o padrão ESC na carga Util 
-				if (tempStr == byteESC){
-					quadroEnquadradoStr += byteESC + tempStr;
+				if (byteStr == byteESC){
+					quadroEnquadradoStr += byteESC + byteStr;
 					contESC++;
 				}
 			}else {
-				quadroEnquadradoStr += tempStr;
+				quadroEnquadradoStr += byteStr;
 			}
 
-			tempStr = "";	// reseta string temporaria de cada byte
+			byteStr = "";	// reseta string temporaria de cada byte
 			indice += 8;	// anda de byte em byte
 
 			if (indice >= bitsQuadro)	// caso indice seja o tamanho do quadro, break
@@ -334,12 +334,13 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 	if (bitsQuadro == 0)
 		return quadroEnquadradoInt;
 
-	string sequenciaBits = "01100001"; 
+	string sequenciaBits = "01111110"; 
+	string sequencia5Bits = "11111";
 
 	string quadroEnquadradoStr = "";
-	string tempStr = "";
+	string byteStr = "";
 
-	int i, j, indice = 0, cont = 0;
+	int i, j, indice = 0, cont = 0, conta5Bits = 0;
 	int qtdBytesQuadro = bitsQuadro / 8; 
 	int resto = qtdBytesQuadro % 4;
 	int qtdQuadros = qtdBytesQuadro / 4;
@@ -356,23 +357,34 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 	}
 
 	do{
-		quadroEnquadradoStr += sequenciaBits;	// sequencia de bits inicial 
+		quadroEnquadradoStr += sequenciaBits;	// sequencia de bits inicial
+
+		// quadros de 4 bytes cada
 		for (i = 1; i <= 4; i++){
+
 			// pega cada byte individual da carga util
 			for (j = indice; j <= (indice+7); j++){
-				tempStr += quadroStr[j];	
+				byteStr += quadroStr[j];	
 			}
 
-			// caso tenha padrão ESC ou Flag na carga util
-			if (tempStr == sequenciaBits) {
-				cout << "Existe sequencia de bits na carga util!" << endl;
-				// insere o bit 0 após
-				quadroEnquadradoStr += tempStr + "0";
-			}else {
-				quadroEnquadradoStr += tempStr;
-			}
+			// verifica bit a bit do byte
+			for (int j = 0; j < 8; j++) {
+				if(byteStr[j] == '1'){
+					conta5Bits++;
+				}
+				if(byteStr[j] == '0'){
+					conta5Bits = 0;
+				}
+				quadroEnquadradoStr += byteStr[j];	
 
-			tempStr = "";	// reseta string temporaria de cada byte
+				// Existe sequencia de 5 bits 1 na carga util (TRANSMISSAO)
+				if(conta5Bits == 5){
+					quadroEnquadradoStr += '0';	
+					conta5Bits = 0;
+				}
+			}
+			
+			byteStr = "";	// reseta string temporaria de cada byte
 			indice += 8;	// anda de byte em byte
 
 			if (indice >= bitsQuadro)	// caso indice seja o tamanho do quadro, break
@@ -381,7 +393,6 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 		
 		quadroEnquadradoStr += sequenciaBits;	// sequencia de bits final
 		cont++;
-
 	}while(cont < qtdQuadros);
 
 	int tamEnquadrado = quadroEnquadradoStr.size();

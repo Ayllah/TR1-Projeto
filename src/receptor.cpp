@@ -146,8 +146,8 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 	string byteESC = "00000000"; 
 
 	string quadroDesenquadradoStr = "";
-	string tempStr = "";
-	string tempStr2 = "";
+	string byteStr = "";
+	string byteStr2 = "";
 	int i, j, indice = 0;
 
 	// cria uma quadro em formato string
@@ -163,28 +163,28 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 	while(indice < bitsQuadro){
 		// pega um byte 
 		for (j = indice; j <= (indice+7); j++){
-			tempStr += quadroStr[j];	
+			byteStr += quadroStr[j];	
 		}
 
 		// caso seja um byte ESC
-		if(tempStr == byteESC){
+		if(byteStr == byteESC){
 			// próximo byte -> pega 8 indices a frente
 			for (j = (indice+8); j <= (indice+7); j++){
-				tempStr2 += quadroStr[j];	
+				byteStr2 += quadroStr[j];	
 			}
 			// adicionar próximo byte
-			quadroDesenquadradoStr += tempStr2;
+			quadroDesenquadradoStr += byteStr2;
 			indice += 16;	 // pula o proximo byte já adicionado
-			tempStr2 = ""; // reseta string temporaria 2
+			byteStr2 = ""; // reseta string temporaria 2
 		}else {
 			indice += 8;	// anda de byte em byte
 		}
 		// se não for byte de Flag ou ESC, faz parte da carga util
-		if(tempStr != byteFlag && tempStr != byteESC){
-			quadroDesenquadradoStr += tempStr;
+		if(byteStr != byteFlag && byteStr != byteESC){
+			quadroDesenquadradoStr += byteStr;
 		}
 
-		tempStr = "";	// reseta string temporaria de cada byte
+		byteStr = "";	// reseta string temporaria de cada byte
 	}
 
 	int tamDesenquadrado = quadroDesenquadradoStr.size();
@@ -216,18 +216,16 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> q
 vector<int> quadroDesenquadradoInt;
 
 	int bitsQuadro = quadro.size();
-	string sequenciaBits = "01100001"; 
+	string sequenciaBits = "01111110"; 
+	string sequencia5Bits = "11111";
 
 	string quadroDesenquadradoStr = "";
-	string tempStr = "";
-	string tempStr2 = "";
-	int i, j, indice = 0;
-
-	int problema = bitsQuadro % 8;
-	int qtdBytesQuadro = bitsQuadro / 8; 
+	string byteStr = "";
+	int i, j, conta5Bits = 0;
 	
 	// cria uma quadro em formato string
 	string quadroStr = "";
+	string quadroSemFlags = "";
 	for (i = 0; i < bitsQuadro; i++) {
 		quadroStr += to_string(quadro[i]);
 	}
@@ -236,47 +234,43 @@ vector<int> quadroDesenquadradoInt;
 	if (bitsQuadro == 0)
 		return quadroDesenquadradoInt;
 
-	// Caso em que tem padrão de sequencia de bits no quadro
-	if (problema != 0) {
-		cout << "Possui bits 0 sobrando, tem padrao de sequencia de bits no quadro." << endl;
-
-		while(indice < bitsQuadro){
-			// pega um byte 
-			for (j = indice; j <= (indice+7); j++){
-				tempStr += quadroStr[j];	
+	// Retira as sequencia de bits do quadro Enquadrado
+	for(i = 0; i < bitsQuadro; i++) {
+		// verifica se já passou do ultimo byte do quadro
+		if(i < bitsQuadro - 8){
+			// verifica byte a byte 
+			for (j = i; j < (i+8); j++){
+				byteStr += quadroStr[j];	
 			}
 
-			if(tempStr == sequenciaBits && indice != 0 && indice != bitsQuadro - 8){
-
-				quadroDesenquadradoStr += tempStr;
-
-				if(quadroStr[indice+8] == '0')
-					indice += 9; // Pula o bit 0
-
-			}else if(tempStr != sequenciaBits){
-				quadroDesenquadradoStr += tempStr;
-				indice += 8;	// anda de byte em byte
+			// Se existe byte igual a sequencia de bits na carga util
+			if(byteStr == sequenciaBits){
+				i += 7; // pula os indices desse byte
 			}else{
-				indice += 8;	// anda de byte em byte
+				quadroSemFlags += quadroStr[i]; // adiciona bit a bit
 			}
+		}
+		byteStr = "";	// reseta string temporaria de cada byte
+	}
 
-			tempStr = "";	// reseta string temporaria de cada byte
+	int tamQuadroSemFlags = quadroSemFlags.length();
+
+	for (i = 0; i < tamQuadroSemFlags; i++) {
+
+		if(quadroSemFlags[i] == '1'){
+			conta5Bits++;
+		}
+		if(quadroSemFlags[i] == '0'){
+			conta5Bits = 0; // reseta contador de 5 bits
 		}
 
-	} else {// Caso em que não tem padrão de sequencia de bits no quadro
-		while(indice < bitsQuadro){
-			// pega um byte 
-			for (j = indice; j <= (indice+7); j++){
-				tempStr += quadroStr[j];	
-			}
-
-			// se não for sequencia de bits -> faz parte da carga util
-			if(tempStr != sequenciaBits){
-				quadroDesenquadradoStr += tempStr;
-			}
-
-			indice += 8;	// anda de byte em byte
-			tempStr = "";	// reseta string temporaria de cada byte
+		// Existe sequencia de 5 bits 1 na carga util (RECEPTORA)
+		if(conta5Bits == 5){
+			quadroDesenquadradoStr += quadroSemFlags[i];// adciona o quinto bit 1
+			i = i+1; // pula o indice 
+			conta5Bits = 0; 
+		}else{
+			quadroDesenquadradoStr += quadroSemFlags[i];
 		}
 	}
 
