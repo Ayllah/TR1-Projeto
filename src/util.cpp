@@ -17,18 +17,7 @@ string decimalToBinary(int number) {
     binary = "0" + binary;
 	}
 	
-	cout << "binary: " << binary << endl;
+	// cout << "binary: " << binary << endl;
 
   return binary;
 }
-
-// int main() {
-
-//   string bin = decimalToBinary(8);
-//   cout << bin << endl;
-
-//   int n = 2 % 4;
-//   cout << n << endl;
-
-//   return 0;
-// }

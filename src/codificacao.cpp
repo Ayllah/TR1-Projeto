@@ -1,7 +1,8 @@
+#include "camadafisica.h"
+
 /*************************************************************
 * Camada Transmissora - Codificação
 *********************************************************** */
-#include "camadafisica.h"
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
 	return quadro;
