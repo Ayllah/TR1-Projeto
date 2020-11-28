@@ -9,7 +9,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits;
 
   // alterar de acordo o teste
-	int tipoDeDecodificacao = 1;
+	int tipoDeDecodificacao = 0;
   
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
@@ -82,7 +82,7 @@ void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 2; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {

@@ -54,7 +54,7 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeCodificacao = 1; 
+	int tipoDeCodificacao = 0; 
 
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
@@ -102,7 +102,7 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 2; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {

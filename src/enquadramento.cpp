@@ -7,32 +7,27 @@
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
 	//implementacao do algoritmo
 	int cont = 0;
-	vector<int> contQuadro;
 	vector<int> quadroInt;
 
-	//int bitsQuadro = quadro.size();
-
 	int qtdBytesQuadro = quadro.size()/8; 
+	int qtdQuadros = qtdBytesQuadro/4;																																						
 
 	string headerStr;
 	string headerBinaria;
 
-	int tamHeaderStr;
-
 	int indice = 0;
 
+	// Caso a quantidade de bytes seja multiplo de 4
 	if (qtdBytesQuadro % 4 == 0) {
-		int qntQuadros = qtdBytesQuadro/4;																																						
 
-		headerStr = decimalToBinary(5);	
-		tamHeaderStr = headerStr.length();
+		// todo header tera valor fixo de 5 Bytes
+		headerStr = decimalToBinary(5);	// converte de formato decimal para string binaria
 
-		cout << "tamHeaderStr: " << tamHeaderStr << endl;
+		// cria cada quadro a quadro
+		for (int j = 0; j < qtdQuadros; j++){	
 
-		for (int j = 0; j < qntQuadros; j++){	
-
-			for (int i = 0; i < tamHeaderStr; i++) {
-				//quadro.push_back(msgBinaria[i]);
+			// insere cada header (8 bits) no quadro de vetor de inteiros
+			for (int i = 0; i < 8; i++) {
 
 				// Code ASCII 0
 				if (headerStr[i] == 48)
@@ -43,29 +38,30 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 					quadroInt.push_back(1);
 			}	
 
+			// insere de 4 em 4 Bytes (32 bits) no quadro de vetor de inteiros
 			for(int i = 0+indice; i < 32+indice; i++){																									
 				quadroInt.push_back(quadro[i]);
 			}				
 
-			indice += 32;
+			indice += 32; // pula para os 4 Bytes da proxima iteracao
 		}																																														
 	}	
 
+	// Caso a quantidade de bytes nao seja multiplo de 4
 	if (qtdBytesQuadro % 4 != 0) {
-			int resto = qtdBytesQuadro % 4; 
-			int qtdQuadros = qtdBytesQuadro/4;																																
 
-		do{
-
+		int resto = qtdBytesQuadro % 4; 
+		
+		do { // pelo menos 1 quadro sera criado
+			// caso tenha apenas 1 quadro com menos de 4 Bytes
 			if (qtdQuadros == 0){
 				headerStr = decimalToBinary(resto+1);	
 			}else{
 				headerStr = decimalToBinary(5);	
 			}
 
-			tamHeaderStr = headerStr.length();
-
-			for (int i = 0; i < tamHeaderStr; i++) {
+			// insere cada header (8 bits) no quadro de vetor de inteiros
+			for (int i = 0; i < 8; i++) {
 				//quadro.push_back(msgBinaria[i]);
 
 				// Code ASCII 0
@@ -79,17 +75,17 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 	
 			// Caso ultimo loop
 			if(cont == qtdQuadros) {  
-
 				headerStr = decimalToBinary(resto+1);	
+
+				// insere quadro com o resto de bytes (resto * 8 bits)
 				for(int i = 0+indice; i < indice + (resto*8); i++)																								
 					quadroInt.push_back(quadro[i]);
 					
 			} else {
+				// insere de 4 em 4 Bytes (32 bits) no quadro de vetor de inteiros
 				for(int i = 0+indice; i < 32+indice; i++)																								
 					quadroInt.push_back(quadro[i]);
 			}					
-
-			// cout << "headerStr: " << headerStr << endl;
 
 			indice += 32;
 			cont++;
@@ -97,9 +93,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoContagemDeCaracteres (vect
 	}				
 
 	int tam = quadroInt.size();
-
 	cout << "Quadro ENQUADRADO (Contagem de Caracteres): ";
-	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadroInt[i];
 	}
@@ -117,16 +111,16 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 	if (bitsQuadro == 0)
 		return quadroEnquadradoInt;
 		
+	int i, j, indice = 0, contQuadros = 0, contFlag = 0, contESC = 0;
+	int qtdBytesQuadro = bitsQuadro / 8; 
+	int resto = qtdBytesQuadro % 4;
+	int qtdQuadros = qtdBytesQuadro / 4;
+
 	string byteFlag = "11111111"; 
 	string byteESC = "00000000"; 
 
 	string quadroEnquadradoStr = "";
 	string byteStr = "";
-
-	int i, j, indice = 0, cont = 0, contFlag = 0, contESC = 0;
-	int qtdBytesQuadro = bitsQuadro / 8; 
-	int resto = qtdBytesQuadro % 4;
-	int qtdQuadros = qtdBytesQuadro / 4;
 
 	// Se tiver resto, tem q fazer 1 quadro a mais
 	if (resto != 0) {
@@ -139,8 +133,9 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 		quadroStr += to_string(quadro[i]);
 	}
 
-	do{
+	do{ // pelo menos 1 quadro sera criado
 		quadroEnquadradoStr += byteFlag;	// flag inicial 
+
 		for (i = 1; i <= 4; i++){
 			// pega cada byte individual da carga util
 			for (j = indice; j <= (indice+7); j++){
@@ -150,11 +145,13 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 			// caso tenha padrão ESC ou Flag na carga util
 			if (byteStr == byteFlag || byteStr == byteESC) {
 				cout << "Existe Flag ou Escape na carga util!" << endl;
+
 				// Caso tenha o padrão Flag na carga Util 
 				if (byteStr == byteFlag){
 					quadroEnquadradoStr += byteESC + byteStr;
 					contFlag++;
 				}
+
 				// Caso tenha o padrão ESC na carga Util 
 				if (byteStr == byteESC){
 					quadroEnquadradoStr += byteESC + byteStr;
@@ -167,14 +164,15 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 			byteStr = "";	// reseta string temporaria de cada byte
 			indice += 8;	// anda de byte em byte
 
-			if (indice >= bitsQuadro)	// caso indice seja o tamanho do quadro, break
+			// caso indice seja maior que o tamanho do quadro, sai do loop
+			if (indice >= bitsQuadro)	
 				break;
 		}
 		
 		quadroEnquadradoStr += byteFlag;	// flag final
-		cont++;
+		contQuadros++;
 
-	}while(cont < qtdQuadros);
+	}while(contQuadros < qtdQuadros);
 	
 	// Tem padrão Flag e ESC na carga util- apenas aviso
 	if(contFlag > 0 && contESC > 0){
@@ -195,9 +193,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 	}
 
 	int tam = quadroEnquadradoInt.size();
-
 	cout << "Quadro ENQUADRADO (Insercao de Bytes): ";
-	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
 		cout << quadroEnquadradoInt[i];
 	}
@@ -214,16 +210,13 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 	if (bitsQuadro == 0)
 		return quadroEnquadradoInt;
 
-	string sequenciaBits = "01111110"; 
-	string sequencia5Bits = "11111";
-
-	string quadroEnquadradoStr = "";
-	string byteStr = "";
-
-	int i, j, indice = 0, cont = 0, conta5Bits = 0;
+	int i, j, indice = 0, contQuadros = 0, conta5Bits = 0;
 	int qtdBytesQuadro = bitsQuadro / 8; 
 	int resto = qtdBytesQuadro % 4;
 	int qtdQuadros = qtdBytesQuadro / 4;
+
+	string sequenciaBits = "01111110"; 
+	string quadroEnquadradoStr, byteStr;
 
 	// Se tiver resto, tem q fazer 1 quadro a mais
 	if (resto != 0) {
@@ -267,13 +260,14 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 			byteStr = "";	// reseta string temporaria de cada byte
 			indice += 8;	// anda de byte em byte
 
-			if (indice >= bitsQuadro)	// caso indice seja o tamanho do quadro, break
+			// caso indice seja maior que o tamanho do quadro, break
+			if (indice >= bitsQuadro)	
 				break;
 		}
 		
 		quadroEnquadradoStr += sequenciaBits;	// sequencia de bits final
-		cont++;
-	}while(cont < qtdQuadros);
+		contQuadros++;
+	}while(contQuadros < qtdQuadros);
 
 	int tamEnquadrado = quadroEnquadradoStr.size();
 
@@ -289,7 +283,6 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 	}
 
 	int tam = quadroEnquadradoInt.size();
-
 	cout << "Quadro ENQUADRADO (Insercao de bits): ";
 	// converte quadro de vetor de inteiros para string
 	for (int i = 0; i < tam; i++){
@@ -307,25 +300,26 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<int> quadro) {
 	//implementacao do algoritmo para DESENQUADRAR
 	int bitsQuadro = quadro.size();
-	int count = 0;
-	int count2 = 0;
+	int indice = 0, indiceHeader = 0;
 	string headerStr;
 
-	while (count2 < bitsQuadro){
+	while (indice < bitsQuadro){
 
-		for (int i = count+1; i < 8+count; i++) {
+		// pega o header em formato string binaria
+		for (int i = indiceHeader; i < indiceHeader+8; i++) {
 			headerStr += to_string(quadro[i]);
 		}
 
+		// converte string binaria para inteiro
 		int headerInt = stoi(headerStr, 0, 2);
-		// cout << "headerInt: " << headerInt << endl;
 
-		headerStr = "";// reseta header em formato string
+		headerStr = "";// reseta header 
 
-		quadro.erase(quadro.begin()+count, quadro.begin()+count+8);
-		count += (8*(headerInt-1));
+	  // apaga os headers em seus respectivos indices
+		quadro.erase(quadro.begin()+indiceHeader, quadro.begin()+indiceHeader+8);
+		indiceHeader += (8*(headerInt-1));	// pula o numero de bytes da carga util
 
-		count2 += (8*headerInt);
+		indice += (8*headerInt); // pula os bytes de cada quadro
 	}
 
 	int tam = quadro.size();
@@ -343,14 +337,12 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoContagemDeCaracteres (vector<
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> quadro) {
 	vector<int> quadroDesenquadradoInt;
 
+	int i, j, indice = 0;
+	string quadroDesenquadradoStr, byteStr, byteStr2;
+
 	int bitsQuadro = quadro.size();
 	string byteFlag = "11111111"; 
 	string byteESC = "00000000"; 
-
-	string quadroDesenquadradoStr = "";
-	string byteStr = "";
-	string byteStr2 = "";
-	int i, j, indice = 0;
 
 	// cria uma quadro em formato string
 	string quadroStr = "";
@@ -368,6 +360,11 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 			byteStr += quadroStr[j];	
 		}
 
+		// se não for byte de Flag ou ESC, faz parte da carga util
+		if(byteStr != byteFlag && byteStr != byteESC){
+			quadroDesenquadradoStr += byteStr;
+		}
+
 		// caso seja um byte ESC
 		if(byteStr == byteESC){
 			// próximo byte -> pega 8 indices a frente
@@ -381,11 +378,7 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 		}else {
 			indice += 8;	// anda de byte em byte
 		}
-		// se não for byte de Flag ou ESC, faz parte da carga util
-		if(byteStr != byteFlag && byteStr != byteESC){
-			quadroDesenquadradoStr += byteStr;
-		}
-
+		
 		byteStr = "";	// reseta string temporaria de cada byte
 	}
 
@@ -417,17 +410,14 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro) {
 vector<int> quadroDesenquadradoInt;
 
+	int i, j, conta5Bits = 0;
+	string quadroDesenquadradoStr, byteStr, quadroSemFlags;
+
 	int bitsQuadro = quadro.size();
 	string sequenciaBits = "01111110"; 
-	string sequencia5Bits = "11111";
 
-	string quadroDesenquadradoStr = "";
-	string byteStr = "";
-	int i, j, conta5Bits = 0;
-	
 	// cria uma quadro em formato string
-	string quadroStr = "";
-	string quadroSemFlags = "";
+	string quadroStr;
 	for (i = 0; i < bitsQuadro; i++) {
 		quadroStr += to_string(quadro[i]);
 	}
@@ -438,6 +428,7 @@ vector<int> quadroDesenquadradoInt;
 
 	// Retira as sequencia de bits do quadro Enquadrado
 	for(i = 0; i < bitsQuadro; i++) {
+
 		// verifica se já passou do ultimo byte do quadro
 		if(i < bitsQuadro - 8){
 			// verifica byte a byte 
@@ -466,13 +457,12 @@ vector<int> quadroDesenquadradoInt;
 			conta5Bits = 0; // reseta contador de 5 bits
 		}
 
+		quadroDesenquadradoStr += quadroSemFlags[i];// adciona o quinto bit 1
+
 		// Existe sequencia de 5 bits 1 na carga util (RECEPTORA)
 		if(conta5Bits == 5){
-			quadroDesenquadradoStr += quadroSemFlags[i];// adciona o quinto bit 1
 			i = i+1; // pula o indice 
 			conta5Bits = 0; 
-		}else{
-			quadroDesenquadradoStr += quadroSemFlags[i];
 		}
 	}
 
