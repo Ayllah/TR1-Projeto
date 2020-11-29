@@ -5,6 +5,7 @@
 * 						Camada Fisica
 *************************************************************/
 
+
 void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits;
 

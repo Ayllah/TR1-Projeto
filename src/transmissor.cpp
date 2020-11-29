@@ -14,7 +14,6 @@ string decimalToBinary(int number) {
 	for (int i = 0; i < restante; i++){
     binary = "0" + binary;
 	}
-	
 	// cout << "binary: " << binary << endl;
 
   return binary;
@@ -68,6 +67,7 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 
 	CamadaEnlaceDadosTransmissora(quadro);
 }//fim do metodo CamadaDeAplicacaoTransmissora
+
 
 void CamadaFisicaTransmissora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
