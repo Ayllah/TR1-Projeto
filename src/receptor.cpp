@@ -9,7 +9,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits;
 
   // alterar de acordo o teste
-	int tipoDeDecodificacao = 0;
+	int tipoDeDecodificacao = 2;
   
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
@@ -49,7 +49,7 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
 			letraMsg += mensagem[j];
 		}
 
-		cout << "-------------------" << endl;
+		cout << "----------------------------" << endl;
 		cout << "Letra em bits: " << letraMsg << endl;
 
 		// pega valor decimal da tabela ASCII do string em binario
