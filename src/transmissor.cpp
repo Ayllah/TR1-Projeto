@@ -73,7 +73,7 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits; 
 
   // alterar de acordo o teste
-	int tipoDeCodificacao = 2; 
+	int tipoDeCodificacao = 0; 
 
 	switch (tipoDeCodificacao) {
 		case 0 : //codificao binaria
@@ -124,7 +124,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 
 	int tam = quadro.size();
 
-	for(int i = 0; i <= tam; i++){
+	for(int i = 0; i < tam; i++){
 		if(quadro[i] == 0){
 			codigoManchester.push_back(0);
 			codigoManchester.push_back(1);
@@ -154,7 +154,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(vector<int>
 	int transicao = 0;	
 
 	// percorre ao contrario por conta da disposição do bitset
-	for(int i = 0; i <= tam; i++){
+	for(int i = 0; i < tam; i++){
 		if(quadro[i] == 1) {
 			// incrementa o valor de transicao a cada valor logico 1 encontrado
 			transicao++;	
@@ -197,7 +197,6 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 	//chama proxima camada
 	CamadaFisicaTransmissora(quadro);
 }//fim do metodo CamadaEnlaceDadosTransmissora
-
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
 	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
