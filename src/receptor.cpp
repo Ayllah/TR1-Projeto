@@ -186,7 +186,7 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 
 void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 	quadro = CamadaEnlaceDadosReceptoraEnquadramento(quadro);
-	quadro = CamadaDeEnlaceTransmissoraControleDeErro(quadro);
+	quadro = CamadaEnlaceDadosReceptoraControleDeErro(quadro);
 
 	//chama proxima camada
 	CamadaDeAplicacaoReceptora(quadro);
@@ -434,22 +434,22 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
 	return;
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErro
 
-void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar
 
 
-void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar
 
 
-void CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
 	//usar polinomio CRC-32(IEEE 802)
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCRC
 
 
-void CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming
