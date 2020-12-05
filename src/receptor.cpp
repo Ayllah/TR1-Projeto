@@ -10,7 +10,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 
   // alterar de acordo o teste
 	int tipoDeDecodificacao = 0;
-  
+
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
 			fluxoBrutoDeBits =
@@ -186,6 +186,8 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 
 void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 	quadro = CamadaEnlaceDadosReceptoraEnquadramento(quadro);
+	quadro = CamadaDeEnlaceTransmissoraControleDeErro(quadro);
+
 	//chama proxima camada
 	CamadaDeAplicacaoReceptora(quadro);
 }//fim do metodo CamadaEnlaceDadosReceptora
@@ -407,3 +409,47 @@ vector<int> quadroDesenquadradoInt;
 
 	return quadroDesenquadradoInt;
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBits
+
+
+/*************************************************************
+* Camada Receptora - Controle de erro
+*********************************************************** */
+
+vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
+	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+	switch (tipoDeControleDeErro) {
+		case 0 : //bit de paridade par
+		//codigo
+		break;
+	case 1 : //bit de paridade impar
+		//codigo
+		break;
+	case 2 : //CRC
+		//codigo
+	case 3 : //codigo de hamming
+		//codigo
+		break;
+	}//fim do switch/case
+
+	return;
+}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErro
+
+void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro) {
+	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
+}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar
+
+
+void CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro) {
+	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
+}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar
+
+
+void CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
+	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
+	//usar polinomio CRC-32(IEEE 802)
+}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCRC
+
+
+void CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
+}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming
