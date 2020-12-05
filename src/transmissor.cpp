@@ -107,12 +107,18 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
 	while (fluxoBrutoDeBitsPontoB.size() != fluxoBrutoDeBitsPontoA.size()) {
+
 		if ((rand()%100) == ... ){ //fazer a probabilidade do erro
 			fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA; //BITS!!!
-		else //ERRO! INVERTER (usa condicao ternaria)
-			fluxoBrutoDeBitsPontoB == 0) ?
+		} 
+			
+		else{ //ERRO! INVERTER (usa condicao ternaria)
+			(fluxoBrutoDeBitsPontoB == 0) ? 
 			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB++ :
 			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB--;
+		} 
+			
+
 	}//fim do while
 
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
@@ -526,7 +532,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 * Camada Transmissora - Controle de Erro
 *********************************************************** */
 
-vector<int> quadro CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
 	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
 	switch (tipoDeControleDeErro) {
 		case 0 : //bit de paridade par
@@ -545,23 +551,23 @@ vector<int> quadro CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quad
 	return;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErro
 
-void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro) {
 //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadePar
 
 
-void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro)
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro)
 {
 //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadeImpar
 
 
-void CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) {
 //implementacao do algoritmo
 //usar polinomio CRC-32(IEEE 802)
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroCRC
 
 
-void CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
 //implementacao do algoritmo
 }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
