@@ -2,12 +2,12 @@
 #include "camadaenlace.h"
 
 string decimalToBinary(int number) {
-  string binary = "";
+	string binary = "";
 
-  while(number > 0) {
-    binary = to_string(number % 2) + binary;
-    number /= 2;
-  }
+	while(number > 0) {
+		binary = to_string(number % 2) + binary;
+		number /= 2;
+	}
 
 	int restante = 8 - binary.length();
 
@@ -16,7 +16,7 @@ string decimalToBinary(int number) {
 	}
 	// cout << "binary: " << binary << endl;
 
-  return binary;
+	return binary;
 }
 
 /*************************************************************
@@ -99,12 +99,20 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 */
 void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	//OBS IMPORTANTE: trabalhar com BITS e nao com BYTES!!!
+	int erro, porcentagemDeErros;
 	vector<int> fluxoBrutoDeBitsPontoA;
 	vector<int> fluxoBrutoDeBitsPontoB;
+
+	porcentagemDeErros = 0; //10%, 20%, 30%, 40%, ..., 100%
 	fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
 	while (fluxoBrutoDeBitsPontoB.size() != fluxoBrutoDeBitsPontoA.size()) {
-		fluxoBrutoDeBitsPontoB = fluxoBrutoDeBitsPontoA; // BITS Sendo transferidos
+		if ((rand()%100) == ... ){ //fazer a probabilidade do erro
+			fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA; //BITS!!!
+		else //ERRO! INVERTER (usa condicao ternaria)
+			fluxoBrutoDeBitsPontoB == 0) ?
+			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB++ :
+			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB--;
 	}//fim do while
 
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
@@ -194,9 +202,11 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchesterDiferencial(vector<int>
 *************************************************************/
 void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 	quadro = CamadaEnlaceDadosTransmissoraEnquadramento(quadro);
+	quadro = CamadaEnlaceDadosTransmissoraControleDeErro(quadro);
 	//chama proxima camada
 	CamadaFisicaTransmissora(quadro);
 }//fim do metodo CamadaEnlaceDadosTransmissora
+
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
 	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
@@ -511,3 +521,47 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 
 	return quadroEnquadradoInt;
 }//fim do metodo CamadaEnlaceDadosTransmissoraInsercaoDeBits
+
+/*************************************************************
+* Camada Transmissora - Controle de Erro
+*********************************************************** */
+
+vector<int> quadro CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
+	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+	switch (tipoDeControleDeErro) {
+		case 0 : //bit de paridade par
+			//codigo
+			break;
+		case 1 : //bit de paridade impar
+			//codigo
+			break;
+		case 2 : //CRC
+			//codigo
+		case 3 : //codigo de Hamming
+			//codigo
+		break;
+	}//fim do switch/case
+
+	return;
+}//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErro
+
+void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro) {
+//implementacao do algoritmo
+}//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadePar
+
+
+void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro)
+{
+//implementacao do algoritmo
+}//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadeImpar
+
+
+void CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) {
+//implementacao do algoritmo
+//usar polinomio CRC-32(IEEE 802)
+}//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroCRC
+
+
+void CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+//implementacao do algoritmo
+}//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
