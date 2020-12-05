@@ -8,6 +8,10 @@ string decimalToBinary(int number);
 /*************************************************************
 * Camada Transmissora
 *************************************************************/
+
+/*************************************************************
+*                       ENQUADRAMENTO
+*************************************************************/
 void CamadaEnlaceDadosTransmissora (vector<int> quadro);
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro);
 
@@ -37,8 +41,23 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBytes (vector<in
 */
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int> quadro);
 
+
+
+/*************************************************************
+*                      CONTROLE DE ERRO
+*************************************************************/
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro);
+
 /*************************************************************
 * Camada Receptora
+*************************************************************/
+
+/*************************************************************
+*                       ENQUADRAMENTO
 *************************************************************/
 void CamadaEnlaceDadosReceptora (vector<int> quadro);
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro);
@@ -60,5 +79,15 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBytes (vector<int> 
  * adicionados são retirados.
 */
 vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> quadro);
+
+
+/*************************************************************
+*                      CONTROLE DE ERRO
+*************************************************************/
+vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro);
+vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro);
 
 #endif 	//CAMADAENLACE_H
