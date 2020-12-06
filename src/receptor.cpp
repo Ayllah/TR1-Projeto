@@ -8,6 +8,10 @@
 void CamadaFisicaReceptora (vector<int> quadro) {
 	vector<int> fluxoBrutoDeBits;
 
+	cout << "------------------------------\n";
+	cout << "      CAMADA RECEPTORA        \n";
+	cout << "------------------------------\n";
+
   // alterar de acordo o teste
 	int tipoDeDecodificacao = 0;
 
@@ -193,7 +197,7 @@ void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -416,7 +420,7 @@ vector<int> quadroDesenquadradoInt;
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
 	vector<int> quadroCorrecao;
 
 	switch (tipoDeControleDeErro) {
@@ -442,48 +446,30 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-	int tam = quadro.size();
-	int bitParidade;
-	int count;
-
-	cout << "Quadro Recebido BitParidade: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
+	int bitParidade, count;
 
 	bitParidade = quadro.back();	//Guarda bit de paridade para futura comparacao
 	quadro.pop_back();				//Retira o bit de paridade
 
-	cout << "Quadro Sem BitParidade: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
+	cout << "Bit Paridade Par: " << bitParidade << endl;
+
+	int bitsQuadro = quadro.size();
 
 	//Conta a quantidade de 1s no quadro
-	for(int i = 0; i < tam; i++){	
+	for(int i = 0; i < bitsQuadro; i++){	
 		if(quadro[i] == 1)
 			count ++;			
 	}
 
-	//Verifica se é par
-	if((count % 2) == 0){
-		quadro.push_back(0);
-	}
-	else{
-		quadro.push_back(1);
-	}
-
-	if(bitParidade == quadro.back()){
+	//Verifica se é par -> par: 0 , impar: 1
+	if((count % 2 == 0 && bitParidade == 0) || (count % 2 != 0 && bitParidade == 1)){
 		cout << "NAO HOUVE ERRO!" << endl;
-	}
-	else{
+	} else{
 		cout << "HOUVE ERRO!" << endl;
 	}
-		
-	cout << "Quadro Bit Paridade Par Receptor: ";
-	for(int i = 0; i < quadro.size(); i++){	
+
+	cout << "Quadro Sem Bit Paridade Par: ";
+	for(int i = 0; i < bitsQuadro; i++){	
 		cout << quadro[i];
 	}
 	cout << "\n";
@@ -494,37 +480,31 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-	int tam = quadro.size();
+	int bitsQuadro = quadro.size();
 	int bitParidade;
 	int count;
 
 	bitParidade = quadro.back();	//Guarda bit de paridade para futura comparacao
 	quadro.pop_back();				//Retira o bit de paridade
 
+	cout << "Bit Paridade Impar: " << bitParidade << endl;
+
 	//Conta a quantidade de 1s no quadro
-	for(int i = 0; i < tam; i++){	
+	for(int i = 0; i < bitsQuadro; i++){	
 		if(quadro[i] == 1)
 			count ++;			
 	}
 
-	//Verifica se é par
-	if((count % 2) == 0){
-		quadro.push_back(1);
-	}
-	else{
-		quadro.push_back(0);
-	}
-
-	if(bitParidade == quadro.back()){
+	//Verifica se é impar -> impar: 0 , par: 1
+	if((count % 2 == 0 && bitParidade == 1) || (count % 2 != 0 && bitParidade == 0)){
 		cout << "NAO HOUVE ERRO!" << endl;
-	}
-	else{
+	} else{
 		cout << "HOUVE ERRO!" << endl;
 	}
-		//quadro.pop_back();
 
-	cout << "Quadro Bit Paridade Impar Receptor: ";
-	for(int i = 0; i < quadro.size(); i++){	
+	bitsQuadro = quadro.size();
+	cout << "Quadro Bit sem Paridade Impar: ";
+	for(int i = 0; i < bitsQuadro; i++){	
 		cout << quadro[i];
 	}
 	cout << "\n";
@@ -536,22 +516,20 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<i
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
 	//usar polinomio CRC-32(IEEE 802)
-vector<int> CRC;
-	int tamGerador = 4, tamQuadro;
-	int tam = quadro.size();
-	string polGerador = "1001";
-	string quadroStr = "";
-	int mensagemInt;
 	int i;
+	int tamGerador = 4, tamQuadroStr;
+	int bitsQuadro = quadro.size();
+	string polGerador = "1001", quadroStr ;
+	vector<int> CRC;
 
-	for(i = 0; i < tam; i++){
+	for(i = 0; i < bitsQuadro; i++){
 		quadroStr += (to_string(quadro[i]));	//Transforma em string
 	}
 
-	tamQuadro = quadroStr.length();
+	tamQuadroStr = quadroStr.length();
 	
 	//Enquanto o tamanho da mensagem for maior que o tamanho do gerador
-	while (tamQuadro >= tamGerador){				 
+	while (tamQuadroStr >= tamGerador){				 
 
 		//o tamanho do polinomio gerador continua dividindo
 		for (i = 0; i < tamGerador; i++) {
@@ -567,10 +545,10 @@ vector<int> CRC;
 			quadroStr.erase(quadroStr.begin());	
 		}
 			
-		tamQuadro = quadroStr.length();		
+		tamQuadroStr = quadroStr.length();		
 	}
 
-	cout << "CRC Verificacao:" << quadroStr << endl;
+	cout << "CRC Verificacao: " << quadroStr << endl;
 
 	if(quadroStr == "000"){
 		cout << "NAO HOUVE ERRO! - CRC" << endl;
@@ -583,8 +561,9 @@ vector<int> CRC;
 		quadro.pop_back();
 	}
 
-	cout << "Quadro de vetor de inteiros sem CRC: ";
-	for(int i = 0; i < quadro.size(); i++){	
+	bitsQuadro = quadro.size();
+	cout << "Quadro sem CRC: ";
+	for(int i = 0; i < bitsQuadro; i++){	
 		cout << quadro[i];
 	}
 	cout << "\n";

@@ -59,6 +59,10 @@ void CamadaDeAplicacaoTransmissora (string mensagem) {
 			quadro.push_back(1);
 	}
 
+	cout << "------------------------------\n";
+	cout << "      CAMADA TRANSMISSORA     \n";
+	cout << "------------------------------\n";
+
 	cout << "Quadro de Bits: ";
 	for (int i = 0; i < tamanho; i++) {
 		cout << quadro[i];
@@ -102,7 +106,7 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	int erro, porcentagemDeErros;
 	vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 	vector<int> fluxoBrutoDeBitsPontoB;
-	porcentagemDeErros = 0; //10%, 20%, 30%, 40%, ..., 100%
+	porcentagemDeErros = 10; //10%, 20%, 30%, 40%, ..., 100%
 
 	cout << "Numero de bits no Fluxo bruto de Bits: " << fluxoBrutoDeBits.size() << endl;
 
@@ -216,7 +220,7 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosTransmissora
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -534,7 +538,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
 	vector<int> quadroCorrecao;
 
 	switch (tipoDeControleDeErro) {
@@ -577,7 +581,8 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<in
 		quadro.push_back(1);
 	}
 
-	cout << "Quadro Bit Paridade Par: ";
+	tam = quadro.size();
+	cout << "Quadro Bit com Paridade Par: ";
 	for(int i = 0; i < tam; i++){	
 		cout << quadro[i];
 	}
@@ -606,7 +611,8 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<
 		quadro.push_back(0);
 	}
 
-	cout << "Quadro Bit Paridade Impar: ";
+	tam = quadro.size();
+	cout << "Quadro Bit com Paridade Impar: ";
 	for(int i = 0; i < tam; i++){	
 		cout << quadro[i];
 	}
@@ -668,6 +674,7 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) 
 			quadro.push_back(1);
 	}
 
+	bitsQuadro = quadro.size();
 	cout << "Quadro com CRC: ";
 	for(int i = 0; i < bitsQuadro; i++){	
 		cout << quadro[i];
