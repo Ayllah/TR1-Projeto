@@ -100,28 +100,30 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	//OBS IMPORTANTE: trabalhar com BITS e nao com BYTES!!!
 	int erro, porcentagemDeErros;
-	vector<int> fluxoBrutoDeBitsPontoA;
+	vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 	vector<int> fluxoBrutoDeBitsPontoB;
-
 	porcentagemDeErros = 0; //10%, 20%, 30%, 40%, ..., 100%
-	fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
-	while (fluxoBrutoDeBitsPontoB.size() != fluxoBrutoDeBitsPontoA.size()) {
+	cout << "Numero de bits no Fluxo bruto de Bits: " << fluxoBrutoDeBits.size() << endl;
 
-		if ((rand()%100) == ... ){ //fazer a probabilidade do erro
-			fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA; //BITS!!!
-		} 
+	// pega o tamanho dos fluxos brutos de bits do ponto A e B
+	int bitsfluxoBrutoDeBitsA = fluxoBrutoDeBitsPontoA.size();
+
+	for (int i = 0; i < bitsfluxoBrutoDeBitsA; i++) {
+		//verificar se o numero de 1 a 100 gerado está no valor da porcentagem de erro
+		if (rand()%100 + 1 <= porcentagemDeErros ){ 
+			fluxoBrutoDeBitsPontoB.push_back(!fluxoBrutoDeBitsPontoA[i]); // Inverte o Bit
+			cout << "Erro no Bit [" << i << "]" << endl;
+		}
+		else{ 
+			fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]);
+		}
+		
 			
-		else{ //ERRO! INVERTER (usa condicao ternaria)
-			(fluxoBrutoDeBitsPontoB == 0) ? 
-			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB++ :
-			fluxoBrutoBitsPontoA = fluxoBrutoBitsPontoB--;
-		} 
-			
-
 	}//fim do while
 
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
+
 }//fim do metodo MeioDeTransmissao
 
 /*************************************************************
@@ -213,9 +215,8 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 	CamadaFisicaTransmissora(quadro);
 }//fim do metodo CamadaEnlaceDadosTransmissora
 
-
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -533,41 +534,151 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
+	vector<int> quadroCorrecao;
+
 	switch (tipoDeControleDeErro) {
 		case 0 : //bit de paridade par
-			//codigo
+			quadroCorrecao =
+			CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(quadro);
 			break;
 		case 1 : //bit de paridade impar
-			//codigo
+			quadroCorrecao =
+			CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(quadro);
 			break;
 		case 2 : //CRC
-			//codigo
-		case 3 : //codigo de Hamming
-			//codigo
-		break;
+			quadroCorrecao = 
+			CamadaEnlaceDadosTransmissoraControleDeErroCRC (quadro);
+		// case 3 : //codigo de Hamming
+		// 	quadroCorrecao = 
+		// 	CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (quadro);
+		// break;
 	}//fim do switch/case
 
-	return;
+	return quadroCorrecao;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErro
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro) {
-//implementacao do algoritmo
+	//implementacao do algoritmo
+	int tam = quadro.size();
+	int count;
+	
+	//Conta a quantidade de 1s no quadro
+	for(int i = 0; i < tam; i++){	
+		if(quadro[i] == 1)
+			count ++;			
+	}
+
+	//Verifica se é par
+	if((count % 2) == 0){
+		quadro.push_back(0);
+	}
+	else{
+		quadro.push_back(1);
+	}
+
+	cout << "Quadro Bit Paridade Par: ";
+	for(int i = 0; i < tam; i++){	
+		cout << quadro[i];
+	}
+	cout << "\n";
+
+	return quadro;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadePar
 
 
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro)
-{
-//implementacao do algoritmo
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro){
+	//implementacao do algoritmo
+	int tam = quadro.size();
+	int count;
+	
+	//Conta a quantidade de 1s no quadro
+	for(int i = 0; i < tam; i++){	
+		if(quadro[i] == 1)
+			count ++;			
+	}
+
+	//Verifica se é par
+	if((count % 2) == 0){
+		quadro.push_back(1);
+	}
+	else{
+		quadro.push_back(0);
+	}
+
+	cout << "Quadro Bit Paridade Impar: ";
+	for(int i = 0; i < tam; i++){	
+		cout << quadro[i];
+	}
+	cout << "\n";
+
+	return quadro;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroBitParidadeImpar
 
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) {
 //implementacao do algoritmo
 //usar polinomio CRC-32(IEEE 802)
+	vector<int> CRC;
+	int tamGerador = 4, tamQuadroStr;
+	int bitsQuadro = quadro.size();
+	string polGerador = "1001", tempStr, tempStr2;
+	string quadroStr = "";
+	int i;
+
+	for(i = 0; i < bitsQuadro; i++){
+		quadroStr += (to_string(quadro[i]));	//Transforma em string
+	}
+
+	// insere os bits 0 do CRC
+	quadroStr += "000";
+
+	tamQuadroStr = quadroStr.length();
+	
+	//Enquanto o tamanho da mensagem for maior que 
+	while (tamQuadroStr >= tamGerador){				 
+
+		//o tamanho do polinomio gerador continua dividindo
+		for (i = 0; i < tamGerador; i++) {
+			if(quadroStr[i] == polGerador[i]){
+				quadroStr[i] = '0';
+			}else {
+				quadroStr[i] = '1';
+			}
+		}
+
+		//Apaga o primeiro indice
+		if(quadroStr[0] == '0'){
+			quadroStr.erase(quadroStr.begin());	
+		}
+		
+		tamQuadroStr = quadroStr.length();
+	}
+	cout << "CRC Transmissora: " << quadroStr << endl;
+	
+	// Coloca CRC no final do quadro a ser enviado
+	for (int i = 0; i < 3; i++) {
+		
+		// Code ASCII 0
+		if (quadroStr[i] == 48)
+			quadro.push_back(0);
+
+		// Code ASCII 1
+		if (quadroStr[i] == 49)
+			quadro.push_back(1);
+	}
+
+	cout << "Quadro com CRC: ";
+	for(int i = 0; i < bitsQuadro; i++){	
+		cout << quadro[i];
+	}
+	cout << "\n";
+
+	return quadro;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroCRC
 
 
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
-//implementacao do algoritmo
-}//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
+// vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+// 	//implementacao do algoritmo
+
+// }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
