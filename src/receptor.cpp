@@ -10,7 +10,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 
   // alterar de acordo o teste
 	int tipoDeDecodificacao = 0;
-
+  
 	switch (tipoDeDecodificacao) {
 		case 0 : //codificao binaria
 			fluxoBrutoDeBits =
@@ -185,15 +185,13 @@ vector<int> CamadaFisicaReceptoraDecodificacaoManchesterDiferencial(vector<int> 
 *************************************************************/
 
 void CamadaEnlaceDadosReceptora (vector<int> quadro) {
-	quadro = CamadaEnlaceDadosReceptoraControleDeErro(quadro);
 	quadro = CamadaEnlaceDadosReceptoraEnquadramento(quadro);
-
 	//chama proxima camada
 	CamadaDeAplicacaoReceptora(quadro);
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -409,190 +407,3 @@ vector<int> quadroDesenquadradoInt;
 
 	return quadroDesenquadradoInt;
 }//fim do metodo CamadaEnlaceDadosReceptoraInsercaoDeBits
-
-
-/*************************************************************
-* Camada Receptora - Controle de erro
-*********************************************************** */
-
-vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
-	vector<int> quadroCorrecao;
-
-	switch (tipoDeControleDeErro) {
-		case 0 : //bit de paridade par
-		quadroCorrecao =
-		CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(quadro);
-		break;
-	case 1 : //bit de paridade impar
-		quadroCorrecao =
-		CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(quadro);
-		break;
-	case 2 : //CRC
-		quadroCorrecao =
-		CamadaEnlaceDadosReceptoraControleDeErroCRC(quadro);
-	// case 3 : //codigo de hamming
-	// 	quadroCorrecao =
-	// 	CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(quadro);
-	// 	break;
-	}//fim do switch/case
-
-	return quadroCorrecao;
-}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErro
-
-vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro) {
-	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-	int tam = quadro.size();
-	int bitParidade;
-	int count;
-
-	cout << "Quadro Recebido BitParidade: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
-
-	bitParidade = quadro.back();	//Guarda bit de paridade para futura comparacao
-	quadro.pop_back();				//Retira o bit de paridade
-
-	cout << "Quadro Sem BitParidade: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
-
-	//Conta a quantidade de 1s no quadro
-	for(int i = 0; i < tam; i++){	
-		if(quadro[i] == 1)
-			count ++;			
-	}
-
-	//Verifica se é par
-	if((count % 2) == 0){
-		quadro.push_back(0);
-	}
-	else{
-		quadro.push_back(1);
-	}
-
-	if(bitParidade == quadro.back()){
-		cout << "NAO HOUVE ERRO!" << endl;
-	}
-	else{
-		cout << "HOUVE ERRO!" << endl;
-	}
-		
-	cout << "Quadro Bit Paridade Par Receptor: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
-
-	return quadro;
-}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar
-
-
-vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro) {
-	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-	int tam = quadro.size();
-	int bitParidade;
-	int count;
-
-	bitParidade = quadro.back();	//Guarda bit de paridade para futura comparacao
-	quadro.pop_back();				//Retira o bit de paridade
-
-	//Conta a quantidade de 1s no quadro
-	for(int i = 0; i < tam; i++){	
-		if(quadro[i] == 1)
-			count ++;			
-	}
-
-	//Verifica se é par
-	if((count % 2) == 0){
-		quadro.push_back(1);
-	}
-	else{
-		quadro.push_back(0);
-	}
-
-	if(bitParidade == quadro.back()){
-		cout << "NAO HOUVE ERRO!" << endl;
-	}
-	else{
-		cout << "HOUVE ERRO!" << endl;
-	}
-		//quadro.pop_back();
-
-	cout << "Quadro Bit Paridade Impar Receptor: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
-
-	return quadro;
-}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar
-
-
-vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
-	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-	//usar polinomio CRC-32(IEEE 802)
-vector<int> CRC;
-	int tamGerador = 4, tamQuadro;
-	int tam = quadro.size();
-	string polGerador = "1001";
-	string quadroStr = "";
-	int mensagemInt;
-	int i;
-
-	for(i = 0; i < tam; i++){
-		quadroStr += (to_string(quadro[i]));	//Transforma em string
-	}
-
-	tamQuadro = quadroStr.length();
-	
-	//Enquanto o tamanho da mensagem for maior que o tamanho do gerador
-	while (tamQuadro >= tamGerador){				 
-
-		//o tamanho do polinomio gerador continua dividindo
-		for (i = 0; i < tamGerador; i++) {
-			if(quadroStr[i] == polGerador[i]){
-				quadroStr[i] = '0';
-			}else {
-				quadroStr[i] = '1';
-			}
-		}
-
-		//Apaga o primeiro indice
-		if(quadroStr[0] == '0'){
-			quadroStr.erase(quadroStr.begin());	
-		}
-			
-		tamQuadro = quadroStr.length();		
-	}
-
-	cout << "CRC Verificacao:" << quadroStr << endl;
-
-	if(quadroStr == "000"){
-		cout << "NAO HOUVE ERRO! - CRC" << endl;
-	}
-	else{
-		cout << "HOUVE ERRO! - CRC" << endl;
-	}
-
-	for (int i = 0; i < 3; i++){
-		quadro.pop_back();
-	}
-
-	cout << "Quadro de vetor de inteiros sem CRC: ";
-	for(int i = 0; i < quadro.size(); i++){	
-		cout << quadro[i];
-	}
-	cout << "\n";
-
-	return quadro;
-}//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCRC
-
-
-// vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
-// 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
-// }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming
