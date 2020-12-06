@@ -691,68 +691,63 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<i
 	//implementacao do algoritmo
 	int m = quadro.size();
 	int r = 1; 
+	int j = 0; 
+	vector<int> quadroHamming;
+	vector<int> CodHamming(r + m);
 
 	//Calculo da quantidade de bits redundantes
 	while (pow(2, r) < (m + r + 1)) { 
         r++; 
     } 
 
-	vector<int> hammingCode(r + m); 
-
-	for (int i = 0; i < r; ++i) { 
-  
-        // Placing -1 at redundant bits 
-        // place to identify it later 
-        hammingCode[pow(2, i) - 1] = -1; 
+	// Coloca -1 no lugar dos bits redundantes
+    // para futura identificacao
+	for (int i = 0; i < r; ++i) {     
+        CodHamming[pow(2, i) - 1] = -1; 
     } 
-  
-    int j = 0; 
 
-	 for (int i = 0; i < (r + m); i++) { 
-  
-        // Placing msgBits where -1 is 
-        // absent i.e., except redundant 
-        // bits all postions are msgBits 
-        if (hammingCode[i] != -1) { 
-            hammingCode[i] = quadro[j]; 
+	// Coloca os bits do quadro onde não tem -1
+	for (int i = 0; i < (r + m); i++) { 
+        if (CodHamming[i] != -1) { 
+            CodHamming[i] = quadro[j]; 
             j++; 
         } 
     } 
 
 	for (int i = 0; i < (r + m); i++) { 
-  
-        // If current bit is not redundant 
-        // bit then continue 
-        if (hammingCode[i] != -1) 
+
+        // Se o bit não for redundante continua
+        if (CodHamming[i] != -1) 
             continue; 
-  
+
         int x = log2(i + 1); 
         int one_count = 0; 
-  
-        // Find msg bits containing 
-        // set bit at x'th position 
+
+
         for (int j = i + 2; 
 			j <= (r + m); ++j) { 
 
             if (j & (1 << x)) { 
-                if (hammingCode[j - 1] == 1) { 
+                if (CodHamming[j - 1] == 1) { 
                     one_count++; 
                 } 
             } 
         } 
 
 		if (one_count % 2 == 0) { 
-            hammingCode[i] = 0; 
+            CodHamming[i] = 0; 
         } 
         else { 
-            hammingCode[i] = 1; 
+            CodHamming[i] = 1; 
         } 
     } 
-	//vector<int> ans = generateHammingCode(msgBit, m, r); 
 
-    cout << "\nCodigo de Hamming: "; 
-    for (int i = 0; i < hammingCode.size(); i++) 
-        cout << hammingCode[i] << endl; 
+	quadroHamming = CodHamming; 
 
-	return hammingCode;
+    cout << "Codigo de Hamming: "; 
+    for (int i = 0; i < quadroHamming.size(); i++) 
+        cout << quadroHamming[i]; 
+	cout << "\n"; 
+
+	return quadroHamming;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
