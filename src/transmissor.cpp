@@ -1,6 +1,8 @@
 #include "camadafisica.h"
 #include "camadaenlace.h"
 
+#include <bits/stdc++.h> 
+
 string decimalToBinary(int number) {
 	string binary = "";
 
@@ -106,7 +108,7 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	int erro, porcentagemDeErros;
 	vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 	vector<int> fluxoBrutoDeBitsPontoB;
-	porcentagemDeErros = 10; //10%, 20%, 30%, 40%, ..., 100%
+	porcentagemDeErros = 0; //10%, 20%, 30%, 40%, ..., 100%
 
 	cout << "Numero de bits no Fluxo bruto de Bits: " << fluxoBrutoDeBits.size() << endl;
 
@@ -538,7 +540,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 0; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 3; //alterar de acordo com o teste
 	vector<int> quadroCorrecao;
 
 	switch (tipoDeControleDeErro) {
@@ -553,10 +555,10 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
 		case 2 : //CRC
 			quadroCorrecao = 
 			CamadaEnlaceDadosTransmissoraControleDeErroCRC (quadro);
-		// case 3 : //codigo de Hamming
-		// 	quadroCorrecao = 
-		// 	CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (quadro);
-		// break;
+		case 3 : //codigo de Hamming
+			quadroCorrecao = 
+			CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (quadro);
+		break;
 	}//fim do switch/case
 
 	return quadroCorrecao;
@@ -685,7 +687,72 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) 
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroCRC
 
 
-// vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro) {
-// 	//implementacao do algoritmo
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro) {
+	//implementacao do algoritmo
+	int m = quadro.size();
+	int r = 1; 
 
-// }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
+	//Calculo da quantidade de bits redundantes
+	while (pow(2, r) < (m + r + 1)) { 
+        r++; 
+    } 
+
+	vector<int> hammingCode(r + m); 
+
+	for (int i = 0; i < r; ++i) { 
+  
+        // Placing -1 at redundant bits 
+        // place to identify it later 
+        hammingCode[pow(2, i) - 1] = -1; 
+    } 
+  
+    int j = 0; 
+
+	 for (int i = 0; i < (r + m); i++) { 
+  
+        // Placing msgBits where -1 is 
+        // absent i.e., except redundant 
+        // bits all postions are msgBits 
+        if (hammingCode[i] != -1) { 
+            hammingCode[i] = quadro[j]; 
+            j++; 
+        } 
+    } 
+
+	for (int i = 0; i < (r + m); i++) { 
+  
+        // If current bit is not redundant 
+        // bit then continue 
+        if (hammingCode[i] != -1) 
+            continue; 
+  
+        int x = log2(i + 1); 
+        int one_count = 0; 
+  
+        // Find msg bits containing 
+        // set bit at x'th position 
+        for (int j = i + 2; 
+			j <= (r + m); ++j) { 
+
+            if (j & (1 << x)) { 
+                if (hammingCode[j - 1] == 1) { 
+                    one_count++; 
+                } 
+            } 
+        } 
+
+		if (one_count % 2 == 0) { 
+            hammingCode[i] = 0; 
+        } 
+        else { 
+            hammingCode[i] = 1; 
+        } 
+    } 
+	//vector<int> ans = generateHammingCode(msgBit, m, r); 
+
+    cout << "\nCodigo de Hamming: "; 
+    for (int i = 0; i < hammingCode.size(); i++) 
+        cout << hammingCode[i] << endl; 
+
+	return hammingCode;
+}//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
