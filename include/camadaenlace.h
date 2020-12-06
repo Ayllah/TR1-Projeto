@@ -47,10 +47,24 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 *                      CONTROLE DE ERRO
 *************************************************************/
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro);
+
+/**
+ * Conta a quantidade de 1s no quadro e se a quantidade for par adiciona 0 no final do vetor
+ * e caso a quantidade seja impar adiciona 1 ao final do vetor, sempre de modo a deixar a
+ * quantidade de bits 1 com valor par.
+*/
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<int> quadro);
+
+
+/**
+ * Conta a quantidade de 1s no quadro e se a quantidade for impar adiciona 0 no final do vetor
+ * e caso a quantidade seja par adiciona 1 ao final do vetor, sempre de modo a deixar a
+ * quantidade de bits 1 com valor impar.
+*/
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro);
+
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro);
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> quadro);
+vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro);
 
 /*************************************************************
 * Camada Receptora
@@ -85,8 +99,23 @@ vector<int> CamadaEnlaceDadosReceptoraEnquadramentoInsercaoDeBits (vector<int> q
 *                      CONTROLE DE ERRO
 *************************************************************/
 vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro);
+
+/**
+ * Guarda o bit de paridade par do final do vetor, o retira e o calcula novamente. Após isso
+ * é feita uma verificação para avaliar se o bit de paridade recalculado é igual ao que
+ * foi guardado anteriormente. Se forem iguais, não houve erro, se forem diferentes,
+ * houve um erro.
+*/
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int> quadro);
+
+/**
+ * Guarda o bit de paridade impar do final do vetor, o retira e o calcula novamente. Após isso
+ * é feita uma verificação para avaliar se o bit de paridade recalculado é igual ao que
+ * foi guardado anteriormente. Se forem iguais, não houve erro, se forem diferentes,
+ * houve um erro.
+*/
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro);
+
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro);
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro);
 
