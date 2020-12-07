@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <bitset> 
+#include <math.h>
 
 #include <stdlib.h>
 #include <stdio.h>

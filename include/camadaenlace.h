@@ -64,7 +64,7 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar (vector<in
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar (vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro);
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro);
+// vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro);
 
 /*************************************************************
 * Camada Receptora
@@ -117,6 +117,6 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar (vector<int
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar (vector<int> quadro);
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro);
-vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro);
+// vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro);
 
 #endif 	//CAMADAENLACE_H

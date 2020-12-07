@@ -8,3 +8,5 @@ $make
 Após isso, basta executar o programa main:
 
 $./main
+
+Github do projeto: https://github.com/Ayllah/TR1-Projeto

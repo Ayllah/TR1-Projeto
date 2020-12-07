@@ -197,7 +197,7 @@ void CamadaEnlaceDadosReceptora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosReceptora
 
 vector<int> CamadaEnlaceDadosReceptoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
 	vector<int> quadroDesenquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -420,7 +420,7 @@ vector<int> quadroDesenquadradoInt;
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 3; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
 	vector<int> quadroCorrecao;
 
 	switch (tipoDeControleDeErro) {
@@ -435,10 +435,11 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErro (vector<int> quadro) {
 	case 2 : //CRC
 		quadroCorrecao =
 		CamadaEnlaceDadosReceptoraControleDeErroCRC(quadro);
-	 case 3 : //codigo de hamming
-	 	quadroCorrecao =
-	 	CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(quadro);
-	 	break;
+		break;
+	//  case 3 : //codigo de hamming
+	// 	quadroCorrecao =
+	// 	CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming(quadro);
+	// 	break;
 	}//fim do switch/case
 
 	return quadroCorrecao;
@@ -571,7 +572,8 @@ vector<int> CamadaEnlaceDadosReceptoraControleDeErroCRC (vector<int> quadro) {
 	return quadro;
 }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCRC
 
-
- vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
- 	//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
- }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming
+//implementacao do algoritmo para VERIFICAR SE HOUVE ERRO
+// vector<int> CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming (vector<int> quadro) {
+	
+// 	return quadro;
+// }//fim do metodo CamadaEnlaceDadosReceptoraControleDeErroCodigoDeHamming

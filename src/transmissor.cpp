@@ -1,8 +1,6 @@
 #include "camadafisica.h"
 #include "camadaenlace.h"
 
-#include <bits/stdc++.h> 
-
 string decimalToBinary(int number) {
 	string binary = "";
 
@@ -105,12 +103,12 @@ void CamadaFisicaTransmissora (vector<int> quadro) {
 */
 void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 	//OBS IMPORTANTE: trabalhar com BITS e nao com BYTES!!!
-	int erro, porcentagemDeErros;
+	int porcentagemDeErros;
 	vector<int> fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 	vector<int> fluxoBrutoDeBitsPontoB;
 	porcentagemDeErros = 0; //10%, 20%, 30%, 40%, ..., 100%
 
-	cout << "Numero de bits no Fluxo bruto de Bits: " << fluxoBrutoDeBits.size() << endl;
+	cout << "Tamanho do Fluxo bruto de Bits: " << fluxoBrutoDeBits.size() << endl;
 
 	// pega o tamanho dos fluxos brutos de bits do ponto A e B
 	int bitsfluxoBrutoDeBitsA = fluxoBrutoDeBitsPontoA.size();
@@ -125,7 +123,6 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 			fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]);
 		}
 		
-			
 	}//fim do while
 
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
@@ -222,7 +219,7 @@ void CamadaEnlaceDadosTransmissora (vector<int> quadro) {
 }//fim do metodo CamadaEnlaceDadosTransmissora
 
 vector<int> CamadaEnlaceDadosTransmissoraEnquadramento (vector<int> quadro) {
-	int tipoDeEnquadramento = 0; //alterar de acordo com o teste
+	int tipoDeEnquadramento = 1; //alterar de acordo com o teste
 	vector<int> quadroEnquadrado;
 
 	switch (tipoDeEnquadramento) {
@@ -540,7 +537,7 @@ vector<int> CamadaEnlaceDadosTransmissoraEnquadramentoInsercaoDeBits (vector<int
 *********************************************************** */
 
 vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
-	int tipoDeControleDeErro = 3; //alterar de acordo com o teste
+	int tipoDeControleDeErro = 2; //alterar de acordo com o teste
 	vector<int> quadroCorrecao;
 
 	switch (tipoDeControleDeErro) {
@@ -555,10 +552,11 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErro (vector<int> quadro) {
 		case 2 : //CRC
 			quadroCorrecao = 
 			CamadaEnlaceDadosTransmissoraControleDeErroCRC (quadro);
-		case 3 : //codigo de Hamming
-			quadroCorrecao = 
-			CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (quadro);
-		break;
+			break;
+		// case 3 : //codigo de Hamming
+		// 	quadroCorrecao = 
+		// 	CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming(quadro);
+		// 	break;
 	}//fim do switch/case
 
 	return quadroCorrecao;
@@ -686,68 +684,6 @@ vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCRC (vector<int> quadro) 
 	return quadro;
 }//fim do metodo CamadaEnlaceDadosTransmissoraControledeErroCRC
 
-
-vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro) {
-	//implementacao do algoritmo
-	int m = quadro.size();
-	int r = 1; 
-	int j = 0; 
-	vector<int> quadroHamming;
-	vector<int> CodHamming(r + m);
-
-	//Calculo da quantidade de bits redundantes
-	while (pow(2, r) < (m + r + 1)) { 
-        r++; 
-    } 
-
-	// Coloca -1 no lugar dos bits redundantes
-    // para futura identificacao
-	for (int i = 0; i < r; ++i) {     
-        CodHamming[pow(2, i) - 1] = -1; 
-    } 
-
-	// Coloca os bits do quadro onde não tem -1
-	for (int i = 0; i < (r + m); i++) { 
-        if (CodHamming[i] != -1) { 
-            CodHamming[i] = quadro[j]; 
-            j++; 
-        } 
-    } 
-
-	for (int i = 0; i < (r + m); i++) { 
-
-        // Se o bit não for redundante continua
-        if (CodHamming[i] != -1) 
-            continue; 
-
-        int x = log2(i + 1); 
-        int one_count = 0; 
-
-
-        for (int j = i + 2; 
-			j <= (r + m); ++j) { 
-
-            if (j & (1 << x)) { 
-                if (CodHamming[j - 1] == 1) { 
-                    one_count++; 
-                } 
-            } 
-        } 
-
-		if (one_count % 2 == 0) { 
-            CodHamming[i] = 0; 
-        } 
-        else { 
-            CodHamming[i] = 1; 
-        } 
-    } 
-
-	quadroHamming = CodHamming; 
-
-    cout << "Codigo de Hamming: "; 
-    for (int i = 0; i < quadroHamming.size(); i++) 
-        cout << quadroHamming[i]; 
-	cout << "\n"; 
-
-	return quadroHamming;
-}//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
+// vector<int> CamadaEnlaceDadosTransmissoraControleDeErroCodigoDeHamming (vector<int> &quadro) {
+	
+// }//fim do metodo CamadaEnlaceDadosTransmissoraControleDeErroCodigoDehamming
